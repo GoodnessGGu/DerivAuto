@@ -1,5 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
+from telegram.request import HTTPXRequest
+from telegram.error import TimedOut
 import os
 import asyncio
 from loguru import logger as log
@@ -22,7 +24,9 @@ class TelegramBot:
             os.getenv("TELEGRAM_CHANNEL_TFXC"): "TFXC SIGNALS UK",
             os.getenv("TELEGRAM_CHANNEL_GOLD_PIPS"): "Gold Pips Hunter"
         }
-        self.app = ApplicationBuilder().token(token).build()
+        # Use custom request object with increased timeouts (30s)
+        self.request = HTTPXRequest(connect_timeout=30.0, read_timeout=30.0)
+        self.app = ApplicationBuilder().token(token).request(self.request).build()
         self._setup_handlers()
 
     def _get_main_keyboard(self):
@@ -245,13 +249,27 @@ class TelegramBot:
         except Exception as e: log.warning(f"Could not send startup message: {e}")
 
     async def start(self):
-        """Initializes and starts the polling loop (Async)."""
+        """Initializes and starts the polling loop with retries for stability."""
         log.info("Starting Telegram Bot (Async)...")
-        await self.app.initialize()
-        await self.app.updater.start_polling()
-        await self.app.start()
-        # Post-start tasks
-        await self.send_startup_message()
+        
+        for attempt in range(3):
+            try:
+                await self.app.initialize()
+                await self.app.updater.start_polling()
+                await self.app.start()
+                # Post-start tasks
+                await self.send_startup_message()
+                log.info("Telegram Bot active and polling.")
+                break
+            except TimedOut as e:
+                if attempt == 2:
+                    log.error(f"Final attempt failed: Telegram Connection Timed Out. {e}")
+                    raise
+                log.warning(f"Telegram Connection Timed Out (Attempt {attempt+1}/3). Retrying in 5s...")
+                await asyncio.sleep(5)
+            except Exception as e:
+                log.error(f"Failed to start Telegram Bot: {e}")
+                raise
 
     async def stop(self):
         """Stops the bot (Async)."""
