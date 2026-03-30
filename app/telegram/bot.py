@@ -280,23 +280,22 @@ class TelegramBot:
         
         # Target/Limit info
         limit_order = details.get("limit_order", {})
-        tp_amount = limit_order.get("take_profit")
-        sl_amount = limit_order.get("stop_loss")
+        tp_raw = limit_order.get("take_profit")
         
-        target_section = ""
-        if tp_amount:
-            target_section = f"🎯 *Target Profit:* `+${tp_amount}`\n"
+        # Handle cases where Deriv returns a dict for take_profit
+        tp_amount = tp_raw.get("order_amount") if isinstance(tp_raw, dict) else tp_raw
+        tp_price = tp_raw.get("value") if isinstance(tp_raw, dict) else None
+        
+        target_info = f"+${tp_amount}" if tp_amount else "None"
+        if tp_price: target_info += f" (@{tp_price})"
         
         msg = (
-            f"📊 *TRADE MONITOR: {symbol}*\n"
+            f"📊 *{symbol}* ({action})\n"
             f"────────────────────\n"
-            f"⚡ *Action:* `{action}`\n"
-            f"💰 *Entry Check:* `${entry_price:.5f}`\n"
-            f"💵 *Stake:* `${buy_price}`\n\n"
-            f"{pnl_emoji} *Current PnL:* `${current_profit:.2f}` (*{pnl_pct:+.1f}%*)\n"
-            f"{target_section}"
-            f"⏱️ *Time Active:* `{duration_str}`\n"
-            f"🆔 `ID: {contract_id}`"
+            f"💰 *Entry:* `${entry_price:.5f}` | 💵 *Stake:* `${buy_price}`\n"
+            f"{pnl_emoji} *PnL:* `${current_profit:.2f}` (*{pnl_pct:+.1f}%*)\n"
+            f"🎯 *Target:* `{target_info}`\n"
+            f"⏱️ *Active:* `{duration_str}` | 🆔 `{contract_id}`"
         )
         
         keyboard = InlineKeyboardMarkup([
