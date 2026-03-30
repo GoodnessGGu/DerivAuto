@@ -50,6 +50,7 @@ class TelegramBot:
         self.app.add_handler(CommandHandler("shutdown", self.shutdown_handler))
         self.app.add_handler(CallbackQueryHandler(self.toggle_channel_handler, pattern="^toggle_"))
         self.app.add_handler(CallbackQueryHandler(self.close_trade_callback, pattern="^close_"))
+        self.app.add_handler(CallbackQueryHandler(self.refresh_trade_callback, pattern="^refresh_"))
         self.app.add_handler(CallbackQueryHandler(self.adjust_setting_handler, pattern="^set_"))
         self.app.add_handler(CallbackQueryHandler(self.switch_account_handler, pattern="^switch_"))
         
@@ -247,33 +248,88 @@ class TelegramBot:
             await update.message.reply_text("📭 *No active trades found.*", parse_mode="Markdown")
             return
 
-        msg = "📊 *Active Trades*\n\n"
         for c in contracts:
-            symbol = c.get("symbol", "N/A")
-            action = c.get("contract_type", "N/A")
-            buy_price = c.get("buy_price", 0)
             contract_id = c["contract_id"]
-            
-            # Fetch real-time status for current PnL
+            # Fetch real-time status for full details
             details = await self.trader.check_contract_status(contract_id)
-            pnl = details.get("profit", 0) if details else 0
-            pnl_emoji = "📈" if pnl >= 0 else "📉"
+            if not details: continue
             
-            # Create a dedicated "Close" button for this contract
-            keyboard = InlineKeyboardMarkup([
-                [InlineKeyboardButton("❌ Close Trade", callback_data=f"close_{contract_id}")]
-            ])
-
-            text = (
-                f"🔹 *{symbol}* ({action})\n"
-                f"💰 Buy: `${buy_price}` | {pnl_emoji} PnL: `${pnl}`\n"
-                f"🆔 ID: `{contract_id}`"
-            )
+            text, keyboard = self._format_trade_status(details)
             await update.message.reply_text(text, reply_markup=keyboard, parse_mode="Markdown")
         
-        # Original status reply (without individual closing) was one big message. 
-        # I've split it here for individual buttons.
         return
+
+    def _format_trade_status(self, details: dict):
+        """Standardized formatter for an active trade status message."""
+        import time
+        from datetime import datetime
+        
+        symbol = details.get("display_name", details.get("symbol", "N/A"))
+        action = details.get("contract_type", "N/A")
+        contract_id = details["contract_id"]
+        buy_price = float(details.get("buy_price", 0))
+        entry_price = float(details.get("entry_tick", 0))
+        current_profit = float(details.get("profit", 0))
+        pnl_pct = (current_profit / buy_price * 100) if buy_price > 0 else 0
+        pnl_emoji = "📈" if current_profit >= 0 else "📉"
+        
+        # Calculation for duration timer
+        start_time = details.get("purchase_time", int(time.time()))
+        duration_sec = int(time.time()) - int(start_time)
+        duration_str = f"{duration_sec // 60:02d}m {duration_sec % 60:02d}s"
+        
+        # Target/Limit info
+        limit_order = details.get("limit_order", {})
+        tp_amount = limit_order.get("take_profit")
+        sl_amount = limit_order.get("stop_loss")
+        
+        target_section = ""
+        if tp_amount:
+            target_section = f"🎯 *Target Profit:* `+${tp_amount}`\n"
+        
+        msg = (
+            f"📊 *TRADE MONITOR: {symbol}*\n"
+            f"────────────────────\n"
+            f"⚡ *Action:* `{action}`\n"
+            f"💰 *Entry Check:* `${entry_price:.5f}`\n"
+            f"💵 *Stake:* `${buy_price}`\n\n"
+            f"{pnl_emoji} *Current PnL:* `${current_profit:.2f}` (*{pnl_pct:+.1f}%*)\n"
+            f"{target_section}"
+            f"⏱️ *Time Active:* `{duration_str}`\n"
+            f"🆔 `ID: {contract_id}`"
+        )
+        
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("🔄 Refresh", callback_data=f"refresh_{contract_id}"),
+                InlineKeyboardButton("❌ Close Trade", callback_data=f"close_{contract_id}")
+            ]
+        ])
+        
+        return msg, keyboard
+
+    async def refresh_trade_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Processes the 'Refresh' button click on an active trade."""
+        query = update.callback_query
+        contract_id = int(query.data.replace("refresh_", ""))
+        
+        # Fetch fresh details
+        details = await self.trader.check_contract_status(contract_id)
+        
+        if not details or details.get("is_sold"):
+            await query.answer("Trade is already closed.")
+            await query.edit_message_text("✅ *Trade has closed.*", parse_mode="Markdown")
+            return
+
+        text, keyboard = self._format_trade_status(details)
+        
+        try:
+            # Only edit if content actually changed to avoid flicker/errors
+            await query.edit_message_text(text, reply_markup=keyboard, parse_mode="Markdown")
+            await query.answer("Updated.")
+        except Exception:
+            # If nothing changed, edit_message_text raises an error
+            await query.answer("Already up to date.")
 
     async def history_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_chat_action("typing")
