@@ -18,16 +18,39 @@ def parse_signal(text: str) -> SignalInput or None:
     else:
         return None
         
-    # 2. Determine Symbol (Map XAUUSD/Gold to frxXAUUSD)
-    symbol = "frxXAUUSD" # Default for these channels
-    if "XAUUSD" not in text_clean and "GOLD" not in text_clean:
-        # If it's another pair, try to extract it
-        match = re.search(r"([A-Z]{3}/?[A-Z]{3}|[A-Z]{2,}\d+)", text_clean)
-        if match:
-            symbol = match.group(1).replace("/", "")
-            # Map common symbols to Deriv format
-            if not symbol.startswith("frx") and any(m in symbol for m in ["EUR", "GBP", "USD", "JPY", "AUD"]):
-                symbol = f"frx{symbol}"
+    # 2. Determine Symbol
+    # Blacklist of common header/alert words to ignore
+    BLACKLIST = ["SIGNAL", "ALERT", "TRADE", "ENTRY", "MARKET", "LIMIT", "URGENT", "VIP"]
+    
+    symbol = None
+    if "XAUUSD" in text_clean or "GOLD" in text_clean:
+        symbol = "frxXAUUSD"
+    else:
+        # Look for 6-letter currency pairs (e.g. EURUSD) or slashed pairs (EUR/USD)
+        # We also look for indices like R_100 or 1HZ100V
+        matches = re.finditer(r"([A-Z]{3}/?[A-Z]{3}|[A-Z]{1,2}_\d+|1HZ\d+V|VOLATILITY\s*\d+)", text_clean)
+        for m in matches:
+            found = m.group(1).replace("/", "").replace(" ", "")
+            # Skip if it's in the blacklist
+            if found in BLACKLIST:
+                continue
+            
+            # Map index names if needed (e.g. VOLATILITY100 -> R_100)
+            if "VOLATILITY" in found:
+                digits = re.search(r"\d+", found).group()
+                found = f"R_{digits}"
+            
+            symbol = found
+            break
+
+    # If no symbol found, default to Gold if appropriate or return None
+    if not symbol:
+        return None
+        
+    # Map common currency symbols to Deriv 'frx' format
+    if not symbol.startswith("frx") and any(m in symbol for m in ["EUR", "GBP", "USD", "JPY", "AUD", "CAD", "NZD", "CHF"]):
+        if len(symbol) == 6:
+            symbol = f"frx{symbol}"
     
     # 3. Extract Entry Price
     entry_price = None
