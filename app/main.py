@@ -1,0 +1,99 @@
+import asyncio
+import os
+import uvicorn
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+
+from app.config import settings
+from app.core.logging import log
+from app.core.database import async_session_factory, engine, Base
+from app.deriv.client import DerivClient
+from app.deriv.trader import DerivTrader
+from app.market_data.collector import MarketDataCollector
+from app.market_data.storage import MarketDataStorage
+from app.signals.executor import SignalExecutor
+from app.signals.manager import LimitOrderManager
+from app.core.risk import RiskManager
+from app.telegram.bot import TelegramBot
+from app.api.routes import router
+
+# Dependency injection and service containers
+deriv_client = DerivClient(app_id=settings.DERIV_APP_ID, token=settings.DERIV_TOKEN)
+deriv_trader = DerivTrader(deriv_client)
+market_storage = MarketDataStorage(async_session_factory)
+market_collector = MarketDataCollector(deriv_client, market_storage, settings.DERIV_SYMBOL_LIST)
+risk_manager = RiskManager(async_session_factory)
+signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_factory)
+limit_manager = LimitOrderManager(signal_executor, async_session_factory, market_collector)
+
+# Initialize Telegram Bot if token provided
+telegram_bot = None
+tg_token = os.getenv("TELEGRAM_BOT_TOKEN")
+if tg_token and tg_token != "your_bot_token_here":
+    telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor)
+    limit_manager.tg_bot = telegram_bot # Link bot to manager for notifications
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 1. Startup: Initialize Database
+    log.info("Starting up: Initializing database tables")
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    
+    # 2. Connect to Deriv
+    log.info("Starting up: Connecting to Deriv WebSocket")
+    asyncio.create_task(deriv_client.connect())
+    
+    # Robust wait for connection and auth
+    log.info("Waiting for Deriv connection to stabilize...")
+    max_retries = 10
+    for i in range(max_retries):
+        if deriv_client.ws and deriv_client.ws.state.name == "OPEN":
+            log.info("Deriv connection established!")
+            break
+        await asyncio.sleep(2)
+    else:
+        log.error("Failed to connect to Deriv within timeout. Signals and Market Data may fail.")
+
+    # 3. Start Market Data Collection
+    log.info("Starting up: Initializing Market Data Collector")
+    try:
+        await market_collector.start()
+    except Exception as e:
+        log.error(f"Market Data Collector failed to start: {e}")
+
+    # 4. Start Limit Order Manager
+    log.info("Starting up: Initializing Limit Order Manager")
+    await limit_manager.start()
+
+    # 5. Start Telegram Bot
+    if telegram_bot:
+        log.info("Starting up: Initializing Telegram Bot")
+        asyncio.create_task(telegram_bot.start())
+    
+    # 5. Keep alive / ping loop
+    async def ping_loop():
+        while True:
+            await asyncio.sleep(30)
+            await deriv_client.ping()
+    
+    asyncio.create_task(ping_loop())
+    
+    yield
+    
+    # 6. Shutdown Logic
+    log.info("Shutting down: Stopping components")
+    await limit_manager.stop()
+    await market_collector.stop()
+    if telegram_bot:
+        await telegram_bot.stop()
+    if deriv_client.ws:
+        await deriv_client.ws.close()
+
+app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
+
+# Add routes
+app.include_router(router, prefix=settings.API_V1_STR)
+
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
