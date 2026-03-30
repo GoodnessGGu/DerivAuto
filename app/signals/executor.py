@@ -156,7 +156,7 @@ class SignalExecutor:
             await session.commit()
 
     async def get_pnl_stats(self):
-        """Calculates PnL for last 24h and 7 days."""
+        """Calculates detailed PnL and trade statistics."""
         await self.sync_open_trades() # Sync before calculating
         
         async with self.session_factory() as session:
@@ -164,21 +164,49 @@ class SignalExecutor:
             day_ago = now - timedelta(days=1)
             week_ago = now - timedelta(days=7)
             
-            def pnl_query(start_date):
-                return select(func.sum(ExecutedTrade.profit)).where(
+            # Helper for metrics
+            async def get_metrics(start_date):
+                # Total Profit
+                profit_q = select(func.sum(ExecutedTrade.profit)).where(
                     ExecutedTrade.created_at >= start_date,
                     ExecutedTrade.status.in_(["won", "lost"])
                 )
+                profit = (await session.execute(profit_q)).scalar() or 0.0
+                
+                # Win Count
+                win_q = select(func.count(ExecutedTrade.id)).where(
+                    ExecutedTrade.created_at >= start_date,
+                    ExecutedTrade.status == "won"
+                )
+                wins = (await session.execute(win_q)).scalar() or 0
+                
+                # Loss Count
+                loss_q = select(func.count(ExecutedTrade.id)).where(
+                    ExecutedTrade.created_at >= start_date,
+                    ExecutedTrade.status == "lost"
+                )
+                losses = (await session.execute(loss_q)).scalar() or 0
+                
+                total = wins + losses
+                win_rate = (wins / total * 100) if total > 0 else 0
+                
+                return {
+                    "profit": round(profit, 2),
+                    "wins": wins,
+                    "losses": losses,
+                    "total": total,
+                    "win_rate": round(win_rate, 1)
+                }
             
-            pnl_24h = (await session.execute(pnl_query(day_ago))).scalar() or 0.0
-            pnl_7d = (await session.execute(pnl_query(week_ago))).scalar() or 0.0
+            stats_24h = await get_metrics(day_ago)
+            stats_7d = await get_metrics(week_ago)
             
-            # Get last 5 trades
-            recent_q = select(ExecutedTrade).order_by(desc(ExecutedTrade.created_at)).limit(5)
+            # Get last 10 trades for history display
+            recent_q = select(ExecutedTrade).order_by(desc(ExecutedTrade.created_at)).limit(10)
             recent_trades = (await session.execute(recent_q)).scalars().all()
             
             return {
-                "pnl_24h": round(pnl_24h, 2),
-                "pnl_7d": round(pnl_7d, 2),
+                "daily": stats_24h,
+                "weekly": stats_7d,
                 "recent_trades": recent_trades
             }

@@ -44,6 +44,7 @@ class TelegramBot:
         self.app.add_handler(MessageHandler(filters.Text("📊 Status"), self.status_handler))
         self.app.add_handler(MessageHandler(filters.Text("📜 History"), self.history_handler))
         self.app.add_handler(MessageHandler(filters.Text("❓ Help"), self.help_handler))
+        self.app.add_handler(CommandHandler("shutdown", self.shutdown_handler))
         self.app.add_handler(CallbackQueryHandler(self.toggle_channel_handler, pattern="^toggle_"))
         self.app.add_handler(CallbackQueryHandler(self.close_trade_callback, pattern="^close_"))
         
@@ -164,18 +165,39 @@ class TelegramBot:
         await update.message.reply_chat_action("typing")
         stats = await self.executor.get_pnl_stats()
         
-        msg = "📜 *Trade History & PnL*\n\n"
-        msg += f"🗓 *Last 24h:* `{stats['pnl_24h']} USD`\n"
-        msg += f"🗓 *Last 7d:* `{stats['pnl_7d']} USD`\n\n"
+        d = stats["daily"]
+        w = stats["weekly"]
         
-        msg += "🕒 *Recent Trades:*\n"
+        msg = "📊 *TRADE PERFORMANCE DASHBOARD* 📊\n\n"
+        
+        # Daily Section
+        msg += "📅 *DAILY SUMMARY (24H)*\n"
+        msg += f"💰 Profit: `{d['profit']} USD`\n"
+        msg += f"📈 Win Rate: `{d['win_rate']}%` (`{d['wins']}W` - `{d['losses']}L`)\n"
+        msg += f"🔢 Total Trades: `{d['total']}`\n\n"
+        
+        # Weekly Section
+        msg += "📅 *WEEKLY SUMMARY (7D)*\n"
+        msg += f"💰 Profit: `{w['profit']} USD`\n"
+        msg += f"📈 Win Rate: `{w['win_rate']}%` (`{w['wins']}W` - `{w['losses']}L`)\n"
+        msg += f"🔢 Total Trades: `{w['total']}`\n\n"
+        
+        # Recent Trades List
+        msg += "🕒 *RECENT TRADE LOG:*\n"
         if not stats["recent_trades"]:
-            msg += "_No recorded trades yet._"
+            msg += "_No recorded trades found._"
         else:
             for t in stats["recent_trades"]:
-                status_emoji = "✅" if t.status == "won" else "❌" if t.status == "lost" else "⏳"
-                pnl_str = f"+{t.profit}" if (t.profit or 0) > 0 else f"{t.profit}"
-                msg += f"{status_emoji} `{t.symbol}` | PnL: `{pnl_str}` | `{t.created_at.strftime('%m-%d %H:%M')}`\n"
+                status_emoji = "🟩" if t.status == "won" else "🟥" if t.status == "lost" else "⏳"
+                pnl_val = t.profit or 0
+                pnl_str = f"+{pnl_val}" if pnl_val > 0 else f"{pnl_val}"
+                
+                # Format time
+                time_str = t.created_at.strftime('%H:%M')
+                msg += f"{status_emoji} `{t.symbol}` | PnL: `{pnl_str}` | `{time_str}`\n"
+        
+        msg += "\n" + "_" * 20 + "\n"
+        msg += "💡 *Tip:* Use /shutdown to stop the bot remotely."
         
         await update.message.reply_text(msg, parse_mode="Markdown")
 
@@ -189,7 +211,8 @@ class TelegramBot:
             "• 💰 *Balance*: View summary of all linked accounts.\n"
             "• 📡 *Channels*: Toggle automated listening for specific sources.\n"
             "• 📊 *Status*: View currently open trades and live PnL.\n"
-            "• 📜 *History*: View PnL stats and recent trade history.\n\n"
+            "• 📜 *History*: View PnL stats and recent trade history.\n"
+            "• 🛑 */shutdown*: Gracefully stop the bot process.\n\n"
             "📥 *Manual Signals:*\n"
             "Simply type or forward a signal here:\n"
             "`SELL XAUUSD 4515.1 TP: 4453.7 SL: 4470.7`"
@@ -355,3 +378,22 @@ class TelegramBot:
             f"📈 Final PnL: *${round(profit, 2)}*",
             parse_mode="Markdown"
         )
+
+    async def shutdown_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Processes the /shutdown command."""
+        user = update.effective_user
+        
+        # 1. Security Check
+        if user.id != self.admin_id:
+            log.warning(f"Unauthorized shutdown attempt by {user.id}")
+            return
+
+        log.info("Shutdown command received from Admin.")
+        await update.message.reply_text(
+            "🛑 *SHUTDOWN INITIATED*\n\nStopping all components and terminating process...",
+            parse_mode="Markdown"
+        )
+        
+        # Trigger graceful exit via SIGINT (allows FastAPI lifespan to clean up)
+        import signal
+        os.kill(os.getpid(), signal.SIGINT)
