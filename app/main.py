@@ -27,7 +27,7 @@ deriv_trader = DerivTrader(deriv_client)
 market_storage = MarketDataStorage(async_session_factory)
 market_collector = MarketDataCollector(deriv_client, market_storage, settings.DERIV_SYMBOL_LIST)
 risk_manager = RiskManager(async_session_factory)
-signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_factory, config_mgr)
+signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_factory, config_mgr, market_collector)
 limit_manager = LimitOrderManager(signal_executor, async_session_factory, market_collector)
 trade_monitor = TradeMonitor(deriv_trader, async_session_factory, config_mgr)
 

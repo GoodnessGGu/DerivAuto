@@ -24,8 +24,17 @@ class MarketDataCollector:
         
         # Subscribe to each symbol
         for symbol in self.symbols:
+            await self.subscribe_symbol(symbol)
+
+    async def subscribe_symbol(self, symbol: str):
+        """Dynamically subscribe to a new symbol if not already monitoring."""
+        if symbol not in self._ticks:
+            log.info(f"Subscribing to new symbol: {symbol}")
             await self.client.subscribe_ticks(symbol)
-            log.info(f"Subscribed to {symbol} ticks")
+            # Initialize cache entry so we don't spam subscribe calls
+            self._ticks[symbol] = None 
+            return True
+        return False
 
     async def _handle_tick(self, data: dict):
         """Callback for incoming ticks."""

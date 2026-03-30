@@ -11,11 +11,12 @@ import asyncio
 from app.core.config_service import ConfigManager
 
 class SignalExecutor:
-    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory, config_mgr: ConfigManager):
+    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory, config_mgr: ConfigManager, market_collector=None):
         self.trader = trader
         self.risk = risk
         self.session_factory = session_factory
         self.config_mgr = config_mgr
+        self.market_collector = market_collector
 
     async def process_signal(self, signal_in: SignalInput, skip_duplicate_check: bool = False, force_execute: bool = False):
         """The main entry point for a new signal."""
@@ -28,6 +29,10 @@ class SignalExecutor:
              signal_in.multiplier = cfg.get("active_multiplier", signal_in.multiplier)
              
         log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} | Stake: {signal_in.stake} | Mult: {signal_in.multiplier}")
+        
+        # --- DYNAMIC SYMBOL SUBSCRIPTION ---
+        if self.market_collector:
+            await self.market_collector.subscribe_symbol(signal_in.symbol)
         
         # 1. Duplicate Protection (Check before saving, skippable for manual trades)
         if not skip_duplicate_check and await self.risk.is_duplicate_signal(signal_in.symbol, signal_in.action):
