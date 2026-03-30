@@ -16,3 +16,4 @@ alembic
 psycopg2-binary
 telethon
 aiosqlite
+python-telegram-bot
