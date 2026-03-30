@@ -1,3 +1,4 @@
+from typing import Optional
 from app.deriv.client import DerivClient
 from app.core.logging import log
 

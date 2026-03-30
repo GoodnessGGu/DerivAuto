@@ -7,6 +7,7 @@ import asyncio
 from loguru import logger as log
 from app.deriv.trader import DerivTrader
 from app.signals.executor import SignalExecutor
+from app.core.config_service import ConfigManager
 
 class TelegramBot:
     def __init__(self, token: str, trader: DerivTrader, executor: SignalExecutor, config_mgr: ConfigManager):
