@@ -62,13 +62,16 @@ class LimitOrderManager:
                         should_trigger = True
 
                 if should_trigger:
-                    log.info(f"🚀 Triggering Limit Order for {sig.symbol} at {current_price} (Target: {sig.entry_price})")
+                    log.info(f"Triggering Limit Order for {sig.symbol} at {current_price} (Target: {sig.entry_price})")
                     
-                    # Notify user if bot is available
+                    # 1. Immediate Lock: Change status to 'triggering' to prevent loop spam
+                    await self.executor._update_signal_status(sig.id, "triggering")
+
+                    # 2. Notify user if bot is available
                     if self.tg_bot:
                         asyncio.create_task(self.tg_bot.notify_trigger(sig.symbol, sig.action, current_price))
 
-                    # Convert DB model back to SignalInput for execution
+                    # 3. Convert DB model back to SignalInput for execution
                     signal_in = SignalInput(
                         symbol=sig.symbol,
                         action=sig.action,
@@ -77,9 +80,9 @@ class LimitOrderManager:
                         stop_loss=sig.stop_loss,
                         entry_price=sig.entry_price,
                         multiplier=sig.multiplier,
-                        source="limit_order_manager",
+                        source=sig.source or "limit_order_manager",
                         metadata=sig.metadata_json
                     )
-                    # Pass force_execute=True to bypass the limit check this time
-                    await self.executor.process_signal(signal_in, force_execute=True)
+                    # 4. Execute: Skip duplicate check because this is a re-trigger of a saved signal
+                    await self.executor.process_signal(signal_in, skip_duplicate_check=True, force_execute=True)
                     # Note: Signal status will be updated inside process_signal

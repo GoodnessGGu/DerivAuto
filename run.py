@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 import uvicorn
 from loguru import logger as log
 
+# Force UTF-8 encoding for Windows terminal emojis
+os.environ["PYTHONUTF8"] = "1"
+os.environ["PYTHONIOENCODING"] = "utf-8"
+
 PORT = int(os.environ.get("PORT", 8000))
 
 def free_port(port: int):
