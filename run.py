@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 import uvicorn
 from loguru import logger as log
 
-PORT = 8000
+PORT = int(os.environ.get("PORT", 8000))
 
 def free_port(port: int):
-    """Kill any process listening on the given port."""
+    """Kill any process listening on the given port (Windows only)."""
+    if os.name != 'nt':
+        return # Skip on Linux/Railway
     try:
         result = subprocess.run(
             ["netstat", "-ano"],

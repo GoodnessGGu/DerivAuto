@@ -15,6 +15,7 @@ from app.signals.executor import SignalExecutor
 from app.signals.manager import LimitOrderManager
 from app.core.risk import RiskManager
 from app.telegram.bot import TelegramBot
+from app.telegram.listener import TelegramListener
 from app.api.routes import router
 
 # Dependency injection and service containers
@@ -32,6 +33,9 @@ tg_token = os.getenv("TELEGRAM_BOT_TOKEN")
 if tg_token and tg_token != "your_bot_token_here":
     telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor)
     limit_manager.tg_bot = telegram_bot # Link bot to manager for notifications
+
+# Initialize Telegram Userbot Listener (Telethon)
+telegram_listener = TelegramListener(signal_executor)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -70,6 +74,9 @@ async def lifespan(app: FastAPI):
     if telegram_bot:
         log.info("Starting up: Initializing Telegram Bot")
         asyncio.create_task(telegram_bot.start())
+
+    # 6. Start Telegram Listener (Userbot)
+    await telegram_listener.start()
     
     # 5. Keep alive / ping loop
     async def ping_loop():
@@ -87,6 +94,7 @@ async def lifespan(app: FastAPI):
     await market_collector.stop()
     if telegram_bot:
         await telegram_bot.stop()
+    await telegram_listener.stop()
     if deriv_client.ws:
         await deriv_client.ws.close()
 

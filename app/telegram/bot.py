@@ -41,9 +41,8 @@ class TelegramBot:
         self.app.add_handler(MessageHandler(filters.Text("📜 History"), self.history_handler))
         self.app.add_handler(MessageHandler(filters.Text("❓ Help"), self.help_handler))
         self.app.add_handler(CallbackQueryHandler(self.toggle_channel_handler, pattern="^toggle_"))
-        # Handle messages from channels (Signal Listening)
-        self.app.add_handler(MessageHandler(filters.ChatType.CHANNEL | filters.ChatType.SUPERGROUP, self.signal_handler))
-        # Handle private command messages
+        
+        # Handle private command messages (Manual Signals)
         self.app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), self.message_handler))
 
     async def start_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -83,53 +82,6 @@ class TelegramBot:
         
         # Refresh the menu
         await self.channel_menu_handler(update, context)
-        # Note: Since channel_menu_handler sends a NEW message, we might want to edit instead
-        # However, for simplicity using existing logic:
-        # await query.edit_message_reply_markup(reply_markup=...)
-
-    async def signal_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Processes incoming messages from channels."""
-        chat = update.effective_chat
-        cid = str(chat.id)
-        
-        # 1. Security Check
-        if cid not in self.channel_names:
-            log.debug(f"Ignoring message from unauthorized chat: {chat.id}")
-            return
-
-        # 2. Toggle Check
-        if not self.channel_states.get(cid, True):
-            log.info(f"Ignoring signal from {self.channel_names[cid]} (Toggled OFF)")
-            return
-
-        text = update.effective_message.text
-        if not text: return
-        
-        log.info(f"Incoming Signal from {chat.title}: {text}")
-        from app.telegram.parser import parse_signal
-        signal_in = parse_signal(text)
-        
-        if signal_in:
-            log.info(f"Parsed Signal Detected: {signal_in.symbol} {signal_in.action}")
-            result = await self.executor.process_signal(signal_in)
-            
-            status_emoji = "✅" if result["status"] == "executed" else "❌"
-            msg = (
-                f"{status_emoji} *SIGNAL EXECUTED*\n\n"
-                f"📡 *Source:* `{self.channel_names[cid]}`\n"
-                f"📈 *Asset:* `{signal_in.symbol}`\n"
-                f"⚡ *Action:* `{signal_in.action}`\n"
-                f"🎯 *Status:* `{result['status']}`"
-            )
-            if "error" in result:
-                msg += f"\n⚠️ *Error:* `{result['error']}`"
-            
-            # Send notification to admin if trade was attempted
-            if self.admin_id:
-                try: await self.app.bot.send_message(chat_id=self.admin_id, text=msg, parse_mode="Markdown")
-                except Exception as e: log.warning(f"Failed to notify admin: {e}")
-        else:
-            log.debug("Message did not match signal format.")
 
     async def balance_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_chat_action("typing")
@@ -215,14 +167,16 @@ class TelegramBot:
     async def help_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         help_text = (
             "❓ *Deriv Bot Help*\n\n"
-            "This bot automatically copies signals from authorized channels and allows manual execution.\n\n"
+            "This bot uses a **Hybrid System**:\n"
+            "1. **Userbot (Telethon)**: Listens to *any* channel you are a member of.\n"
+            "2. **Standard Bot**: Handles your menu/buttons and manual signals.\n\n"
             "🎮 *Commands:*\n"
             "• 💰 *Balance*: View summary of all linked accounts.\n"
-            "• 📡 *Channels*: Toggle signal sources ON/OFF.\n"
+            "• 📡 *Channels*: Toggle automated listening for specific sources.\n"
             "• 📊 *Status*: View currently open trades and live PnL.\n"
             "• 📜 *History*: View PnL stats and recent trade history.\n\n"
             "📥 *Manual Signals:*\n"
-            "Simply forward a message or type a signal in this format:\n"
+            "Simply type or forward a signal here:\n"
             "`SELL XAUUSD 4515.1 TP: 4453.7 SL: 4470.7`"
         )
         await update.message.reply_text(help_text, parse_mode="Markdown")
@@ -282,8 +236,9 @@ class TelegramBot:
         log.info(f"Sending startup message to Admin: {self.admin_id}")
         balance_msg = await self._format_all_balances()
         startup_msg = (
-            "🚀 *Deriv Trading Bot Started!*\n\n"
-            "Signal monitoring is active for authorized channels.\n\n"
+            "🚀 *Deriv Trading Bot System Started!*\n\n"
+            "✅ *Userbot (Listener):* Active\n"
+            "✅ *Standard Bot (UI):* Active\n\n"
             f"{balance_msg}"
         )
         try: await self.app.bot.send_message(chat_id=self.admin_id, text=startup_msg, parse_mode="Markdown")

@@ -1,0 +1,87 @@
+from app.config import settings
+from telethon import TelegramClient, events
+from loguru import logger as log
+from app.signals.executor import SignalExecutor
+from app.telegram.parser import parse_signal
+
+class TelegramListener:
+    def __init__(self, executor: SignalExecutor):
+        self.executor = executor
+        self.api_id = settings.TELEGRAM_API_ID
+        self.api_hash = settings.TELEGRAM_API_HASH
+        self.phone = settings.TELEGRAM_USER_PHONE
+        
+        # Authorized Channels
+        self.channel_ids = [
+            settings.TELEGRAM_CHANNEL_TFXC,
+            settings.TELEGRAM_CHANNEL_GOLD_PIPS,
+            settings.TELEGRAM_CHANNEL_ALBURQUERQUE
+        ]
+        # Filter out None values and clean numeric strings
+        self.channel_ids = [int(cid) for cid in self.channel_ids if cid and str(cid).replace('-', '').isdigit()]
+        
+        self.client = None
+        self.is_running = False
+
+    async def start(self):
+        """Starts the Telethon client."""
+        if not self.api_id or self.api_id == "your_api_id_here":
+            log.warning("TELEGRAM_API_ID not set. Userbot listener will NOT start.")
+            return
+
+        log.info("Starting Telethon Userbot Listener...")
+        self.client = TelegramClient('deriv_user_session', int(self.api_id), self.api_hash)
+        
+        # This will prompt in the terminal for phone/code if not logged in
+        await self.client.start(phone=self.phone)
+        self.is_running = True
+        
+        # Register the message handler
+        self.client.add_event_handler(self._on_new_message, events.NewMessage(chats=self.channel_ids))
+        
+        log.info(f"Userbot Listener active for channels: {self.channel_ids}")
+        # Note: We don't run_until_disconnected here because we run in the FastAPI loop
+
+    async def stop(self):
+        """Stops the Telethon client."""
+        if self.client:
+            await self.client.disconnect()
+        self.is_running = False
+        log.info("Userbot Listener stopped.")
+
+    async def _on_new_message(self, event):
+        """Callback for new messages in authorized channels."""
+        chat = await event.get_chat()
+        chat_id = int(chat.id)
+        text = event.raw_text
+        
+        log.info(f"Userbot detected message from {getattr(chat, 'title', chat.id)}: {text[:50]}...")
+        
+        # Source Detection Logic
+        detected_source = "telegram_channel"
+        if str(chat_id) == str(settings.TELEGRAM_CHANNEL_ALBURQUERQUE):
+            if "TFXC" in text.upper():
+                detected_source = "TFXC (via Test)"
+            elif any(k in text.upper() for k in ["GOLD PIPS", "HUNTER"]):
+                detected_source = "Gold Pips (via Test)"
+            else:
+                detected_source = "Alburquerque Test"
+        else:
+            # Direct channel
+            if str(chat_id) == str(settings.TELEGRAM_CHANNEL_TFXC):
+                detected_source = "TFXC Official"
+            elif str(chat_id) == str(settings.TELEGRAM_CHANNEL_GOLD_PIPS):
+                detected_source = "Gold Pips Official"
+
+        # Pass to the standard parser
+        signal_in = parse_signal(text)
+        
+        if signal_in:
+            log.info(f"Found valid signal via Userbot (Source: {detected_source})")
+            signal_in.source = detected_source
+            
+            # Execute
+            result = await self.executor.process_signal(signal_in)
+            log.info(f"Userbot Trade Result: {result.get('status')}")
+        else:
+            log.debug("Userbot message did not match signal format.")

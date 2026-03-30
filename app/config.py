@@ -36,6 +36,10 @@ class Settings(BaseSettings):
     TELEGRAM_ADMIN_ID: Optional[int] = None
     TELEGRAM_CHANNEL_TFXC: Optional[str] = None
     TELEGRAM_CHANNEL_GOLD_PIPS: Optional[str] = None
+    TELEGRAM_CHANNEL_ALBURQUERQUE: Optional[str] = None
+    TELEGRAM_API_ID: Optional[str] = None
+    TELEGRAM_API_HASH: Optional[str] = None
+    TELEGRAM_USER_PHONE: Optional[str] = None
 
     model_config = SettingsConfigDict(
         env_file=".env",

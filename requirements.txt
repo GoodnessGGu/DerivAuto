@@ -14,3 +14,4 @@ pytest-asyncio
 python-dotenv
 alembic
 psycopg2-binary
+telethon

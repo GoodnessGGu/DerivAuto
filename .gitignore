@@ -14,3 +14,4 @@ build/
 venv/
 env/
 node_modules/
+*.session
