@@ -45,6 +45,7 @@ class TelegramBot:
         self.app.add_handler(MessageHandler(filters.Text("📜 History"), self.history_handler))
         self.app.add_handler(MessageHandler(filters.Text("❓ Help"), self.help_handler))
         self.app.add_handler(CallbackQueryHandler(self.toggle_channel_handler, pattern="^toggle_"))
+        self.app.add_handler(CallbackQueryHandler(self.close_trade_callback, pattern="^close_"))
         
         # Handle private command messages (Manual Signals)
         self.app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), self.message_handler))
@@ -136,18 +137,28 @@ class TelegramBot:
             symbol = c.get("symbol", "N/A")
             action = c.get("contract_type", "N/A")
             buy_price = c.get("buy_price", 0)
+            contract_id = c["contract_id"]
+            
             # Fetch real-time status for current PnL
-            details = await self.trader.check_contract_status(c["contract_id"])
+            details = await self.trader.check_contract_status(contract_id)
             pnl = details.get("profit", 0) if details else 0
             pnl_emoji = "📈" if pnl >= 0 else "📉"
             
-            msg += (
+            # Create a dedicated "Close" button for this contract
+            keyboard = InlineKeyboardMarkup([
+                [InlineKeyboardButton("❌ Close Trade", callback_data=f"close_{contract_id}")]
+            ])
+
+            text = (
                 f"🔹 *{symbol}* ({action})\n"
                 f"💰 Buy: `${buy_price}` | {pnl_emoji} PnL: `${pnl}`\n"
-                f"🆔 ID: `{c['contract_id']}`\n\n"
+                f"🆔 ID: `{contract_id}`"
             )
+            await update.message.reply_text(text, reply_markup=keyboard, parse_mode="Markdown")
         
-        await update.message.reply_text(msg, parse_mode="Markdown")
+        # Original status reply (without individual closing) was one big message. 
+        # I've split it here for individual buttons.
+        return
 
     async def history_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_chat_action("typing")
@@ -235,18 +246,25 @@ class TelegramBot:
             log.debug("DM did not match signal format.")
 
     async def send_startup_message(self):
-        """Sends startup diagnostic to admin."""
+        """Sends startup diagnostic to admin with fault tolerance."""
         if not self.admin_id: return
-        log.info(f"Sending startup message to Admin: {self.admin_id}")
-        balance_msg = await self._format_all_balances()
-        startup_msg = (
-            "🚀 *Deriv Trading Bot System Started!*\n\n"
-            "✅ *Userbot (Listener):* Active\n"
-            "✅ *Standard Bot (UI):* Active\n\n"
-            f"{balance_msg}"
-        )
-        try: await self.app.bot.send_message(chat_id=self.admin_id, text=startup_msg, parse_mode="Markdown")
-        except Exception as e: log.warning(f"Could not send startup message: {e}")
+        try:
+            log.info(f"Preparing startup message for Admin: {self.admin_id}")
+            # Try to fetch balance, but don't fail if it takes too long
+            try:
+                balance_msg = await asyncio.wait_for(self._format_all_balances(), timeout=15.0)
+            except:
+                balance_msg = "⚠️ Balance check timed out, but trading logic is ACTIVE."
+                
+            startup_msg = (
+                "🚀 *Deriv Trading Bot System Started!*\n\n"
+                "✅ *Userbot (Listener):* Active\n"
+                "✅ *Standard Bot (UI):* Active\n\n"
+                f"{balance_msg}"
+            )
+            await self.app.bot.send_message(chat_id=self.admin_id, text=startup_msg, parse_mode="Markdown")
+        except Exception as e:
+            log.warning(f"Could not send startup message: {e}")
 
     async def start(self):
         """Initializes and starts the polling loop with retries for stability."""
@@ -297,3 +315,43 @@ class TelegramBot:
             await self.app.bot.send_message(chat_id=self.admin_id, text=msg, parse_mode="Markdown")
         except Exception as e:
             log.error(f"Failed to send trigger notification: {e}")
+
+    async def close_trade_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Processes the 'Close Trade' button click."""
+        query = update.callback_query
+        user = query.from_user
+        
+        # 1. Security Check
+        if user.id != self.admin_id:
+            await query.answer("⚠️ Action unauthorized.")
+            return
+
+        contract_id_str = query.data.replace("close_", "")
+        contract_id = int(contract_id_str)
+        
+        await query.answer("Closing trade...")
+        log.info(f"Manual Close Request: {contract_id}")
+
+        # 2. Execute sell
+        res = await self.trader.sell_contract(contract_id)
+        
+        if res.get("error"):
+            await query.edit_message_text(
+                f"❌ *Failed to close trade!*\n🆔 ID: `{contract_id}`\n⚠️ Reason: `{res['error'].get('message')}`",
+                parse_mode="Markdown"
+            )
+            return
+
+        # 3. Successful Sell
+        sell_info = res.get("sell", {})
+        profit = sell_info.get("sold_for", 0) - sell_info.get("buy_price", 0)
+        pnl_emoji = "✅" if profit >= 0 else "🛑"
+        
+        await query.edit_message_text(
+            f"{pnl_emoji} *TRADE CLOSED MANUALLY*\n\n"
+            f"🆔 ID: `{contract_id}`\n"
+            f"💰 Buy: `${sell_info.get('buy_price')}`\n"
+            f"💰 Sell: `${sell_info.get('sold_for')}`\n"
+            f"📈 Final PnL: *${round(profit, 2)}*",
+            parse_mode="Markdown"
+        )

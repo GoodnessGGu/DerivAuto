@@ -119,3 +119,11 @@ class DerivTrader:
         """Fetch result for a contract."""
         resp = await self.client.send_request({"proposal_open_contract": 1, "contract_id": contract_id})
         return resp.get("proposal_open_contract")
+
+    async def sell_contract(self, contract_id: int):
+        """Sells an open contract at market price."""
+        log.info(f"Selling contract: {contract_id}")
+        return await self.client.send_request({
+            "sell": contract_id,
+            "price": 0  # 0 means market price
+        })

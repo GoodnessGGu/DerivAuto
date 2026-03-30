@@ -99,7 +99,7 @@ class DerivClient:
         await self.ws.send(json.dumps(payload))
         
         try:
-            return await asyncio.wait_for(future, timeout=10.0)
+            return await asyncio.wait_for(future, timeout=30.0)
         except asyncio.TimeoutError:
             self._request_futures.pop(req_id, None)
             raise Exception(f"Request timeout: {payload.get('msg_type', 'unknown')}")
