@@ -19,6 +19,11 @@ def setup_logging():
             logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
     logging.basicConfig(handlers=[InterceptHandler()], level=0)
+    
+    # Suppress noisy HTTP logs from Telegram and httpx
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("telegram.ext._updater").setLevel(logging.WARNING)
+    logging.getLogger("telegram.ext._application").setLevel(logging.WARNING)
 
     # Configure Loguru
     logger.remove()
