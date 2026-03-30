@@ -1,5 +1,6 @@
 from app.config import settings
 from telethon import TelegramClient, events
+from telethon.sessions import StringSession
 from loguru import logger as log
 from app.signals.executor import SignalExecutor
 from app.telegram.parser import parse_signal
@@ -30,9 +31,20 @@ class TelegramListener:
             return
 
         log.info("Starting Telethon Userbot Listener...")
-        self.client = TelegramClient('deriv_user_session', int(self.api_id), self.api_hash)
         
-        # This will prompt in the terminal for phone/code if not logged in
+        # Check for String Session (Recommended for Railway/Server)
+        if settings.TELEGRAM_STRING_SESSION:
+            log.info("Using String Session for Userbot authentication.")
+            self.client = TelegramClient(
+                StringSession(settings.TELEGRAM_STRING_SESSION), 
+                int(self.api_id), 
+                self.api_hash
+            )
+        else:
+            log.warning("No String Session found. Falling back to local file session.")
+            self.client = TelegramClient('deriv_user_session', int(self.api_id), self.api_hash)
+        
+        # This will prompt in the terminal only if StringSession is invalid or file session missing
         await self.client.start(phone=self.phone)
         self.is_running = True
         
