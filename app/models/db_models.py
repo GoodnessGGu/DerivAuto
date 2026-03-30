@@ -46,6 +46,8 @@ class Signal(Base):
     prediction = Column(Integer)
     multiplier = Column(Integer)
     entry_price = Column(Float)
+    take_profit = Column(Float)
+    stop_loss = Column(Float)
     
     confidence = Column(Float)
     source = Column(String, nullable=False)

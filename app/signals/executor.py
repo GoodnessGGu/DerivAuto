@@ -98,6 +98,8 @@ class SignalExecutor:
                 prediction=signal_in.prediction,
                 multiplier=signal_in.multiplier,
                 entry_price=signal_in.entry_price,
+                take_profit=signal_in.take_profit,
+                stop_loss=signal_in.stop_loss,
                 
                 confidence=signal_in.confidence,
                 source=signal_in.source,
