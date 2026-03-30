@@ -8,15 +8,26 @@ from sqlalchemy import select, func, desc
 from datetime import datetime, timedelta
 import asyncio
 
+from app.core.config_service import ConfigManager
+
 class SignalExecutor:
-    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory):
+    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory, config_mgr: ConfigManager):
         self.trader = trader
         self.risk = risk
         self.session_factory = session_factory
+        self.config_mgr = config_mgr
 
     async def process_signal(self, signal_in: SignalInput, skip_duplicate_check: bool = False, force_execute: bool = False):
         """The main entry point for a new signal."""
-        log.info(f"Processing signal: {signal_in.symbol} {signal_in.action}")
+        # --- DYNAMIC CONFIG OVERRIDES ---
+        cfg = await self.config_mgr.get_config()
+        
+        # Override Stake and Multiplier with user-defined settings
+        signal_in.stake = cfg.get("active_stake", signal_in.stake)
+        if signal_in.contract_type in ["MULTUP", "MULTDOWN"]:
+             signal_in.multiplier = cfg.get("active_multiplier", signal_in.multiplier)
+             
+        log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} | Stake: {signal_in.stake} | Mult: {signal_in.multiplier}")
         
         # 1. Duplicate Protection (Check before saving, skippable for manual trades)
         if not skip_duplicate_check and await self.risk.is_duplicate_signal(signal_in.symbol, signal_in.action):

@@ -49,10 +49,33 @@ class DerivClient:
                 await asyncio.sleep(self._reconnect_delay)
                 self._reconnect_delay = min(self._reconnect_delay * 2, 60)
 
-    async def authorize(self) -> bool:
+    async def authorize(self, token: Optional[str] = None) -> bool:
         """Send authorize request."""
-        response = await self.send_request({"authorize": self.token})
-        return "authorize" in response
+        target_token = token or self.token
+        log.info(f"Authorizing client with token: {target_token[:4]}...{target_token[-4:]}")
+        response = await self.send_request({"authorize": target_token})
+        
+        if "authorize" in response:
+            self.token = target_token
+            self.is_authorized = True
+            return True
+        return False
+
+    async def switch_account(self, new_token: str):
+        """Switches the active account by re-authorizing with a new token."""
+        if not new_token:
+            log.error("Switch failed: No token provided.")
+            return False
+            
+        log.info("Switching Deriv account...")
+        success = await self.authorize(new_token)
+        if success:
+            log.info("Account switch successful. Resubscribing to market data...")
+            await self._resubscribe()
+            return True
+        else:
+            log.error("Account switch failed: Authorization rejected.")
+            return False
 
     async def _listen(self):
         """Listen for incoming messages."""

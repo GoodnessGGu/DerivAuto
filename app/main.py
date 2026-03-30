@@ -16,22 +16,26 @@ from app.signals.manager import LimitOrderManager
 from app.core.risk import RiskManager
 from app.telegram.bot import TelegramBot
 from app.telegram.listener import TelegramListener
+from app.core.config_service import ConfigManager
+from app.signals.monitor import TradeMonitor
 from app.api.routes import router
 
 # Dependency injection and service containers
+config_mgr = ConfigManager(async_session_factory)
 deriv_client = DerivClient(app_id=settings.DERIV_APP_ID, token=settings.DERIV_TOKEN)
 deriv_trader = DerivTrader(deriv_client)
 market_storage = MarketDataStorage(async_session_factory)
 market_collector = MarketDataCollector(deriv_client, market_storage, settings.DERIV_SYMBOL_LIST)
 risk_manager = RiskManager(async_session_factory)
-signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_factory)
+signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_factory, config_mgr)
 limit_manager = LimitOrderManager(signal_executor, async_session_factory, market_collector)
+trade_monitor = TradeMonitor(deriv_trader, async_session_factory, config_mgr)
 
 # Initialize Telegram Bot if token provided
 telegram_bot = None
 tg_token = os.getenv("TELEGRAM_BOT_TOKEN")
 if tg_token and tg_token != "your_bot_token_here":
-    telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor)
+    telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor, config_mgr)
     limit_manager.tg_bot = telegram_bot # Link bot to manager for notifications
 
 # Initialize Telegram Userbot Listener (Telethon)
@@ -78,6 +82,9 @@ async def lifespan(app: FastAPI):
     # 6. Start Telegram Listener (Userbot)
     await telegram_listener.start()
     
+    # 7. Start Trade Monitor (Trailing SL)
+    asyncio.create_task(trade_monitor.start())
+    
     # 5. Keep alive / ping loop
     async def ping_loop():
         while True:
@@ -90,6 +97,7 @@ async def lifespan(app: FastAPI):
     
     # 6. Shutdown Logic
     log.info("Shutting down: Stopping components")
+    await trade_monitor.stop()
     await limit_manager.stop()
     await market_collector.stop()
     if telegram_bot:

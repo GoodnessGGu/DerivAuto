@@ -9,10 +9,11 @@ from app.deriv.trader import DerivTrader
 from app.signals.executor import SignalExecutor
 
 class TelegramBot:
-    def __init__(self, token: str, trader: DerivTrader, executor: SignalExecutor):
+    def __init__(self, token: str, trader: DerivTrader, executor: SignalExecutor, config_mgr: ConfigManager):
         self.token = token
         self.trader = trader
         self.executor = executor
+        self.config_mgr = config_mgr
         raw_admin_id = os.getenv("TELEGRAM_ADMIN_ID", "0").strip().replace('"', '').replace("'", "")
         self.admin_id = int(raw_admin_id) if raw_admin_id.isdigit() else 0
         # Channel Toggles: Enabled by default
@@ -33,7 +34,7 @@ class TelegramBot:
         keyboard = [
             [KeyboardButton("💰 Balance"), KeyboardButton("📡 Channels")],
             [KeyboardButton("📊 Status"), KeyboardButton("📜 History")],
-            [KeyboardButton("❓ Help")]
+            [KeyboardButton("⚙️ Settings"), KeyboardButton("❓ Help")]
         ]
         return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
@@ -42,11 +43,14 @@ class TelegramBot:
         self.app.add_handler(MessageHandler(filters.Text("💰 Balance"), self.balance_handler))
         self.app.add_handler(MessageHandler(filters.Text("📡 Channels"), self.channel_menu_handler))
         self.app.add_handler(MessageHandler(filters.Text("📊 Status"), self.status_handler))
+        self.app.add_handler(MessageHandler(filters.Text("⚙️ Settings"), self.settings_menu_handler))
         self.app.add_handler(MessageHandler(filters.Text("📜 History"), self.history_handler))
         self.app.add_handler(MessageHandler(filters.Text("❓ Help"), self.help_handler))
         self.app.add_handler(CommandHandler("shutdown", self.shutdown_handler))
         self.app.add_handler(CallbackQueryHandler(self.toggle_channel_handler, pattern="^toggle_"))
         self.app.add_handler(CallbackQueryHandler(self.close_trade_callback, pattern="^close_"))
+        self.app.add_handler(CallbackQueryHandler(self.adjust_setting_handler, pattern="^set_"))
+        self.app.add_handler(CallbackQueryHandler(self.switch_account_handler, pattern="^switch_"))
         
         # Handle private command messages (Manual Signals)
         self.app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), self.message_handler))
@@ -91,8 +95,117 @@ class TelegramBot:
 
     async def balance_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_chat_action("typing")
+        
+        # 1. Fetch config for current account type
+        cfg = await self.config_mgr.get_config()
+        acc_type = cfg.get("active_account_type", "real").upper()
+        
         msg = await self._format_all_balances()
-        await update.message.reply_text(msg, parse_mode="Markdown")
+        
+        # 2. Add Switch Button
+        target_type = "DEMO" if acc_type == "REAL" else "REAL"
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton(f"🔄 Switch to {target_type}", callback_data=f"switch_{target_type.lower()}")]
+        ])
+        
+        await update.message.reply_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+
+    async def settings_menu_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Displays the dynamic settings menu."""
+        user = update.effective_user
+        if user.id != self.admin_id: return
+
+        await update.message.reply_chat_action("typing")
+        cfg = await self.config_mgr.get_config()
+        
+        stake = cfg.get("active_stake", 5.0)
+        mult = cfg.get("active_multiplier", 100)
+        tsl = "🟢 ON" if cfg.get("trailing_sl_enabled") else "🔴 OFF"
+        
+        msg = (
+            "⚙️ *TRADING SETTINGS*\n\n"
+            f"💰 *Default Stake:* `${stake}`\n"
+            f"✖️ *Multiplier:* `x{mult}`\n"
+            f"📈 *Trailing Stop-Loss:* `{tsl}`\n\n"
+            "Use the buttons below to tune your risk:"
+        )
+        
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("-1", callback_data="set_stake_-1"),
+                InlineKeyboardButton("💰 STAKE", callback_data="none"),
+                InlineKeyboardButton("+1", callback_data="set_stake_1")
+            ],
+            [
+                InlineKeyboardButton("-10", callback_data="set_mult_-10"),
+                InlineKeyboardButton("✖️ MULT", callback_data="none"),
+                InlineKeyboardButton("+10", callback_data="set_mult_10")
+            ],
+            [InlineKeyboardButton(f"TSL: {tsl}", callback_data="set_tsl_toggle")],
+            [InlineKeyboardButton("✅ Done", callback_data="set_done")]
+        ])
+        
+        if update.callback_query:
+            await update.callback_query.edit_message_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+        else:
+            await update.message.reply_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+
+    async def adjust_setting_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Callback for settings adjustments."""
+        query = update.callback_query
+        user = query.from_user
+        if user.id != self.admin_id: return
+        
+        data = query.data
+        if data == "set_done":
+            await query.answer("Settings saved.")
+            await query.edit_message_text("✅ *Settings Updated & Saved.*", parse_mode="Markdown")
+            return
+
+        cfg = await self.config_mgr.get_config()
+        
+        if "stake" in data:
+            change = float(data.split("_")[-1])
+            new_val = max(0.5, cfg.get("active_stake", 5.0) + change)
+            await self.config_mgr.update_setting("active_stake", new_val)
+        
+        elif "mult" in data:
+            change = int(data.split("_")[-1])
+            new_val = max(10, cfg.get("active_multiplier", 100) + change)
+            await self.config_mgr.update_setting("active_multiplier", new_val)
+            
+        elif "tsl_toggle" in data:
+            new_val = not cfg.get("trailing_sl_enabled", False)
+            await self.config_mgr.update_setting("trailing_sl_enabled", new_val)
+            await query.answer(f"Trailing SL: {'Enabled' if new_val else 'Disabled'}")
+
+        # Refresh the menu
+        await self.settings_menu_handler(update, context)
+
+    async def switch_account_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handles the account switch request."""
+        query = update.callback_query
+        user = query.from_user
+        if user.id != self.admin_id: return
+        
+        target_type = query.data.replace("switch_", "") # "demo" or "real"
+        await query.answer(f"Switching to {target_type.upper()}...")
+        
+        # 1. Get token from settings
+        target_token = settings.DERIV_TOKEN_REAL if target_type == "real" else settings.DERIV_TOKEN_DEMO
+        
+        if not target_token:
+            await query.edit_message_text(f"❌ *Switch Failed:* `DERIV_TOKEN_{target_type.upper()}` not found in .env.")
+            return
+
+        # 2. Perform switch in client
+        success = await self.trader.client.switch_account(target_token)
+        
+        if success:
+            await self.config_mgr.update_setting("active_account_type", target_type)
+            await query.edit_message_text(f"✅ *Successfully switched to {target_type.upper()} account!*")
+        else:
+            await query.edit_message_text(f"❌ *Switch Failed:* Could not authorize with {target_type.upper()} token.")
 
     async def _format_all_balances(self) -> str:
         """Fetches and formats balances for all accounts."""

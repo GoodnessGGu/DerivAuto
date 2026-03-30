@@ -127,3 +127,17 @@ class DerivTrader:
             "sell": contract_id,
             "price": 0  # 0 means market price
         })
+
+    async def update_contract_limits(self, contract_id: int, take_profit: Optional[float] = None, stop_loss: Optional[float] = None):
+        """Updates the SL/TP limits for an open contract."""
+        payload = {
+            "contract_update": 1,
+            "contract_id": contract_id,
+            "limit_order": {}
+        }
+        if take_profit is not None:
+            payload["limit_order"]["take_profit"] = take_profit
+        if stop_loss is not None:
+            payload["limit_order"]["stop_loss"] = stop_loss
+            
+        return await self.client.send_request(payload)

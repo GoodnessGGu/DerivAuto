@@ -5,6 +5,8 @@ from typing import List, Optional
 class Settings(BaseSettings):
     # Deriv Configuration
     DERIV_TOKEN: str
+    DERIV_TOKEN_REAL: Optional[str] = None
+    DERIV_TOKEN_DEMO: Optional[str] = None
     DERIV_APP_ID: int = 1089  # Default app_id for testing
     DERIV_SYMBOL_LIST: List[str] = [
         "R_100", "R_50", "1HZ100V", "1HZ50V",  # Indices

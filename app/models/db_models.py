@@ -92,3 +92,13 @@ class FailedSignal(Base):
     signal_data = Column(JSON, nullable=False)
     reason = Column(String, nullable=False)
     timestamp = Column(DateTime, default=datetime.utcnow)
+
+class DynamicConfig(Base):
+    __tablename__ = "dynamic_config"
+
+    id = Column(Integer, primary_key=True)
+    active_stake = Column(Float, default=5.0)
+    active_multiplier = Column(Integer, default=100)
+    trailing_sl_enabled = Column(Boolean, default=False)
+    active_account_type = Column(String, default="real") # "demo" or "real"
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
