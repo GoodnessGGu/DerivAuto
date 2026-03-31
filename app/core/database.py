@@ -8,6 +8,7 @@ engine = create_async_engine(
     future=True,
     pool_size=20,
     max_overflow=10,
+    connect_args={"timeout": 30} if settings.DATABASE_URL.startswith("sqlite") else {}
 )
 
 async_session_factory = async_sessionmaker(

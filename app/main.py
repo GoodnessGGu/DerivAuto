@@ -54,14 +54,11 @@ async def lifespan(app: FastAPI):
     
     # Robust wait for connection and auth
     log.info("Waiting for Deriv connection to stabilize...")
-    max_retries = 10
-    for i in range(max_retries):
-        if deriv_client.ws and deriv_client.ws.state.name == "OPEN":
-            log.info("Deriv connection established!")
-            break
-        await asyncio.sleep(2)
-    else:
-        log.error("Failed to connect to Deriv within timeout. Signals and Market Data may fail.")
+    try:
+        await asyncio.wait_for(deriv_client.connected_event.wait(), timeout=30.0)
+        log.info("Deriv connection established and authorized!")
+    except asyncio.TimeoutError:
+        log.error("Failed to connect to Deriv within timeout. Startup continuing, but signal processing may be delayed.")
 
     # 3. Start Market Data Collection
     log.info("Starting up: Initializing Market Data Collector")
@@ -88,8 +85,13 @@ async def lifespan(app: FastAPI):
     # 5. Keep alive / ping loop
     async def ping_loop():
         while True:
-            await asyncio.sleep(30)
-            await deriv_client.ping()
+            try:
+                await asyncio.sleep(30)
+                if deriv_client.connected_event.is_set():
+                    await deriv_client.ping()
+            except Exception as e:
+                log.warning(f"Ping failed: {e}. Re-verifying connection...")
+                # The client._listen task will handle reconnection, we just catch the error here
     
     asyncio.create_task(ping_loop())
     

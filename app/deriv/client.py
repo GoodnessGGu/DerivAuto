@@ -16,9 +16,9 @@ class DerivClient:
         self.is_authorized = False
         self.subscriptions: Dict[str, str] = {}  # symbol -> req_id or subscription_id
         self._callback_handlers: Dict[str, Callable] = {}
-        self._request_futures: Dict[str, asyncio.Future] = {}
         self._reconnect_delay = 1
         self._running = False
+        self.connected_event = asyncio.Event()
 
     async def connect(self):
         """Establish WebSocket connection and authorize."""
@@ -37,12 +37,14 @@ class DerivClient:
                 if authorized:
                     log.info("Deriv Authorization Successful")
                     self.is_authorized = True
+                    self.connected_event.set()
                     self._reconnect_delay = 1
                     # Resubscribe to previous symbols if any
                     await self._resubscribe()
                     return True
                 else:
                     log.error("Deriv Authorization Failed")
+                    self.connected_event.clear()
                     await self.ws.close()
             except Exception as e:
                 log.error(f"Connection error: {e}. Retrying in {self._reconnect_delay}s...")
@@ -104,13 +106,23 @@ class DerivClient:
             log.error(f"Listener error: {e}")
         finally:
             self.is_authorized = False
+            self.connected_event.clear()
             self._running = False
             if self._running:
                 asyncio.create_task(self.connect())
 
     async def send_request(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Send a request and wait for response using req_id."""
-        if not self.ws or self.ws.state.name == "CLOSED":
+        """Send a request and wait for response using req_id. Waits for connection if down."""
+        # Safety wait: If connection is down, pause here instead of crashing
+        if not self.connected_event.is_set():
+            log.warning(f"Connection down. Waiting to send {payload.get('msg_type', 'request')}...")
+            try:
+                await asyncio.wait_for(self.connected_event.wait(), timeout=20.0)
+            except asyncio.TimeoutError:
+                raise Exception("Request failed: WebSocket connection could not be established in time.")
+
+        if not self.ws or self.ws.state.name != "OPEN":
+            self.connected_event.clear()
             raise Exception("WebSocket not connected")
         
         req_id = str(int(time.time() * 1000))

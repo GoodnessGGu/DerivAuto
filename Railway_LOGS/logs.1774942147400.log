@@ -1,0 +1,1002 @@
+2026-03-31T06:32:12.646414203Z [inf]  2026-03-31 06:32:12.633 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.646421406Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.646425216Z [inf]  [parameters: ('frxGBPUSD', 1.32081, 1.32068, 1.32075, 1774938724, '2026-03-31 06:32:04.000000', 'deriv')]
+2026-03-31T06:32:12.646428103Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.646431241Z [inf]  2026-03-31 06:32:12.641 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.646434317Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.646437185Z [inf]  [parameters: ('frxGBPUSD', 1.32082, 1.32068, 1.32075, 1774938723, '2026-03-31 06:32:03.000000', 'deriv')]
+2026-03-31T06:32:12.646440053Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.647171523Z [inf]  2026-03-31 06:32:12.646 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.647174628Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.647178733Z [inf]  [parameters: ('1HZ100V', 1175.26, 1175.06, 1175.16, 1774938726, '2026-03-31 06:32:06.000000', 'deriv')]
+2026-03-31T06:32:12.647182057Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.652576761Z [inf]  2026-03-31 06:32:12.649 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_100: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.652582752Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.652586753Z [inf]  [parameters: ('R_100', 691.67, 691.47, 691.57, 1774938726, '2026-03-31 06:32:06.000000', 'deriv')]
+2026-03-31T06:32:12.652590319Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.652594269Z [inf]  2026-03-31 06:32:12.651 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_50: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.652597995Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.652601762Z [inf]  [parameters: ('R_50', 101.1922, 101.1722, 101.1822, 1774938726, '2026-03-31 06:32:06.000000', 'deriv')]
+2026-03-31T06:32:12.652605386Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.662418601Z [inf]  2026-03-31 06:32:12.652 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.662423527Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.662426347Z [inf]  [parameters: ('frxGBPUSD', 1.32081, 1.32068, 1.32075, 1774938725, '2026-03-31 06:32:05.000000', 'deriv')]
+2026-03-31T06:32:12.662429536Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.662432692Z [inf]  2026-03-31 06:32:12.657 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxXAUUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.662435457Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.662438418Z [inf]  [parameters: ('frxXAUUSD', 4564.64, 4563.5, 4564.07, 1774938725, '2026-03-31 06:32:05.000000', 'deriv')]
+2026-03-31T06:32:12.662441294Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.663684995Z [inf]  2026-03-31 06:32:12.661 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxXAUUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.663688438Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.663692483Z [inf]  [parameters: ('frxXAUUSD', 4564.63, 4563.52, 4564.08, 1774938726, '2026-03-31 06:32:06.000000', 'deriv')]
+2026-03-31T06:32:12.663695592Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.663698901Z [inf]  2026-03-31 06:32:12.662 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.663701978Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.663704561Z [inf]  [parameters: ('1HZ100V', 1175.72, 1175.52, 1175.62, 1774938725, '2026-03-31 06:32:05.000000', 'deriv')]
+2026-03-31T06:32:12.663708293Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.663710969Z [inf]  2026-03-31 06:32:12.662 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxEURUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.663713596Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.663716151Z [inf]  [parameters: ('frxEURUSD', 1.14715, 1.14705, 1.1471, 1774938725, '2026-03-31 06:32:05.000000', 'deriv')]
+2026-03-31T06:32:12.663718927Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.665072819Z [inf]  2026-03-31 06:32:12.663 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.665081045Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.665086122Z [inf]  [parameters: ('frxGBPUSD', 1.32081, 1.32068, 1.32075, 1774938726, '2026-03-31 06:32:06.000000', 'deriv')]
+2026-03-31T06:32:12.665091127Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:12.665096065Z [inf]  2026-03-31 06:32:12.663 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:12.665100074Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:12.665103704Z [inf]  [parameters: ('1HZ100V', 1175.35, 1175.15, 1175.25, 1774938727, '2026-03-31 06:32:07.000000', 'deriv')]
+2026-03-31T06:32:12.665109664Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:13.638835637Z [inf]  2026-03-31 06:32:13.583 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ50V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:13.638839551Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:13.638842600Z [inf]  [parameters: ('1HZ50V', 303080.31, 303040.31, 303060.31, 1774938724, '2026-03-31 06:32:04.000000', 'deriv')]
+2026-03-31T06:32:13.638845667Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:13.638848623Z [inf]  2026-03-31 06:32:13.586 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_50: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:13.638851732Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:13.638854638Z [inf]  [parameters: ('R_50', 101.2063, 101.1863, 101.1963, 1774938728, '2026-03-31 06:32:08.000000', 'deriv')]
+2026-03-31T06:32:13.638857735Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:14.602574049Z [inf]  2026-03-31 06:32:14.439 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:14.602577172Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:14.602580186Z [inf]  [parameters: ('1HZ100V', 1175.42, 1175.22, 1175.32, 1774938729, '2026-03-31 06:32:09.000000', 'deriv')]
+2026-03-31T06:32:14.602584292Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:14.918610802Z [inf]  2026-03-31 06:32:14.881 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_100: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:14.918614259Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:14.918618645Z [inf]  [parameters: ('R_100', 691.88, 691.68, 691.78, 1774938724, '2026-03-31 06:32:04.000000', 'deriv')]
+2026-03-31T06:32:14.918623034Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:14.918626614Z [inf]  2026-03-31 06:32:14.883 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:14.918629872Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:14.918633308Z [inf]  [parameters: ('1HZ100V', 1175.88, 1175.68, 1175.78, 1774938724, '2026-03-31 06:32:04.000000', 'deriv')]
+2026-03-31T06:32:14.918636749Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:15.576690197Z [inf]  2026-03-31 06:32:15.507 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_50: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:15.576693798Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:15.576697173Z [inf]  [parameters: ('R_50', 101.2006, 101.1806, 101.1906, 1774938730, '2026-03-31 06:32:10.000000', 'deriv')]
+2026-03-31T06:32:15.576700480Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:15.576703488Z [inf]  2026-03-31 06:32:15.508 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ50V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:15.576706386Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:15.576709334Z [inf]  [parameters: ('1HZ50V', 302963.25, 302923.25, 302943.25, 1774938730, '2026-03-31 06:32:10.000000', 'deriv')]
+2026-03-31T06:32:15.576712714Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:17.702418975Z [inf]  2026-03-31 06:32:17.674 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_50: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:17.702421694Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:17.702425737Z [inf]  [parameters: ('R_50', 101.1992, 101.1792, 101.1892, 1774938732, '2026-03-31 06:32:12.000000', 'deriv')]
+2026-03-31T06:32:17.702428519Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:18.628531385Z [inf]  2026-03-31 06:32:18.477 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:18.628535160Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:18.628537969Z [inf]  [parameters: ('frxGBPUSD', 1.32082, 1.32068, 1.32075, 1774938733, '2026-03-31 06:32:13.000000', 'deriv')]
+2026-03-31T06:32:18.628541709Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:18.628545921Z [inf]  2026-03-31 06:32:18.478 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:18.628549890Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:18.628553387Z [inf]  [parameters: ('1HZ100V', 1175.45, 1175.25, 1175.35, 1774938733, '2026-03-31 06:32:13.000000', 'deriv')]
+2026-03-31T06:32:18.628557109Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:18.628560887Z [inf]  2026-03-31 06:32:18.478 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ50V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:18.628564958Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:18.628568567Z [inf]  [parameters: ('1HZ50V', 302991.66, 302951.66, 302971.66, 1774938733, '2026-03-31 06:32:13.000000', 'deriv')]
+2026-03-31T06:32:18.628572393Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:18.628576450Z [inf]  2026-03-31 06:32:18.479 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxXAUUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:18.628580436Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:18.629077955Z [inf]  [parameters: ('frxXAUUSD', 4565.15, 4563.98, 4564.57, 1774938733, '2026-03-31 06:32:13.000000', 'deriv')]
+2026-03-31T06:32:18.629087368Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:19.661593956Z [inf]  2026-03-31 06:32:19.588 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for R_100: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:19.661597691Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:19.661601748Z [inf]  [parameters: ('R_100', 691.35, 691.15, 691.25, 1774938734, '2026-03-31 06:32:14.000000', 'deriv')]
+2026-03-31T06:32:19.661605398Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:19.661609355Z [inf]  2026-03-31 06:32:19.588 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for frxGBPUSD: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:19.661612975Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:19.661617148Z [inf]  [parameters: ('frxGBPUSD', 1.3208, 1.32067, 1.32074, 1774938734, '2026-03-31 06:32:14.000000', 'deriv')]
+2026-03-31T06:32:19.661620417Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:20.645481410Z [inf]  2026-03-31 06:32:20.471 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ100V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:20.645484438Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:20.645488065Z [inf]  [parameters: ('1HZ100V', 1175.72, 1175.52, 1175.62, 1774938735, '2026-03-31 06:32:15.000000', 'deriv')]
+2026-03-31T06:32:20.645490929Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:21.681533045Z [inf]  2026-03-31 06:32:21.577 | ERROR    | app.market_data.storage:save_tick:25 - Error saving tick for 1HZ50V: (sqlite3.OperationalError) database is locked
+2026-03-31T06:32:21.681537955Z [inf]  [SQL: INSERT INTO ticks (symbol, ask, bid, quote, epoch, timestamp, source) VALUES (?, ?, ?, ?, ?, ?, ?)]
+2026-03-31T06:32:21.681541194Z [inf]  [parameters: ('1HZ50V', 302972.99, 302932.99, 302952.99, 1774938736, '2026-03-31 06:32:16.000000', 'deriv')]
+2026-03-31T06:32:21.681544114Z [inf]  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-03-31T06:32:31.150382685Z [inf]  2026-03-31 06:32:31.146 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:33:01.161835757Z [inf]  2026-03-31 06:32:51.500 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:33:20.964248342Z [inf]  2026-03-31 06:33:11.917 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:33:26.367439737Z [inf]  2026-03-31 06:33:26.226 | INFO     | logging:callHandlers:1706 - Got difference for channel 2848189989 updates
+2026-03-31T06:33:32.436544080Z [inf]  2026-03-31 06:33:32.288 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:34:52.495650005Z [inf]  2026-03-31 06:34:42.451 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:34:54.006582989Z [inf]  2026-03-31 06:34:54.000 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:35:23.995681350Z [inf]  2026-03-31 06:35:16.336 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:35:26.922420208Z [inf]  2026-03-31 06:35:26.920 | INFO     | logging:callHandlers:1706 - Got difference for account updates
+2026-03-31T06:35:27.074451146Z [inf]  2026-03-31 06:35:27.073 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:35:34.992609500Z [inf]  2026-03-31 06:35:34.990 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:36:05.269135990Z [inf]  2026-03-31 06:35:55.546 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:36:25.158039560Z [inf]  2026-03-31 06:36:15.943 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:36:45.143346182Z [inf]  2026-03-31 06:36:36.436 | INFO     | logging:callHandlers:1706 - Got difference for channel 1809746691 updates
+2026-03-31T06:36:45.143349608Z [inf]  2026-03-31 06:36:36.610 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:37:05.246289946Z [inf]  2026-03-31 06:36:56.885 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:37:12.776655600Z [inf]  2026-03-31 06:37:12.770 | INFO     | logging:callHandlers:1706 - Got difference for channel 3000228304 updates
+2026-03-31T06:37:17.381265891Z [inf]  2026-03-31 06:37:17.377 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:37:47.345207524Z [inf]  2026-03-31 06:37:37.774 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:38:07.367358208Z [inf]  2026-03-31 06:37:58.330 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:38:27.380403673Z [inf]  2026-03-31 06:38:18.646 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:38:47.428997627Z [inf]  2026-03-31 06:38:39.181 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:38:47.429001749Z [inf]  2026-03-31 06:38:39.346 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:38:47.429005861Z [inf]  2026-03-31 06:38:43.873 | WARNING  | app.deriv.client:_listen:102 - WebSocket connection closed
+2026-03-31T06:38:47.429009768Z [inf]  2026-03-31 06:38:43.874 | ERROR    | logging:callHandlers:1706 - Task exception was never retrieved
+2026-03-31T06:38:47.429014015Z [inf]  future: <Task finished name='Task-75' coro=<lifespan.<locals>.ping_loop() done, defined at /app/app/main.py:89> exception=ConnectionClosedError(None, Close(code=<CloseCode.INTERNAL_ERROR: 1011>, reason='keepalive ping timeout'), None)>
+2026-03-31T06:38:47.429017901Z [inf]  TimeoutError: timed out while closing connection
+2026-03-31T06:38:47.429022211Z [inf]  
+2026-03-31T06:38:47.429026037Z [inf]  
+2026-03-31T06:38:47.429029897Z [inf]  The above exception was the direct cause of the following exception:
+2026-03-31T06:38:47.429033607Z [inf]  
+2026-03-31T06:38:47.429037432Z [inf]  
+2026-03-31T06:38:47.429041364Z [inf]  Traceback (most recent call last):
+2026-03-31T06:38:47.429045321Z [inf]  
+2026-03-31T06:38:47.429049319Z [inf]  > File "/app/app/main.py", line 92, in ping_loop
+2026-03-31T06:38:47.429053330Z [inf]      await deriv_client.ping()
+2026-03-31T06:38:47.429057154Z [inf]            │            └ <function DerivClient.ping at 0x7f42e488c220>
+2026-03-31T06:38:47.429061050Z [inf]            └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T06:38:47.429065065Z [inf]  
+2026-03-31T06:38:47.429068998Z [inf]    File "/app/app/deriv/client.py", line 153, in ping
+2026-03-31T06:38:47.429072834Z [inf]      await self.ws.send(json.dumps({"ping": 1}))
+2026-03-31T06:38:47.429076933Z [inf]            │    │  │    │    └ <function dumps at 0x7f42e74a54e0>
+2026-03-31T06:38:47.429727772Z [inf]            │    │  │    └ <module 'json' from '/usr/local/lib/python3.11/json/__init__.py'>
+2026-03-31T06:38:47.429735621Z [inf]            │    │  └ <function Connection.send at 0x7f4262aaf240>
+2026-03-31T06:38:47.429739903Z [inf]            │    └ <websockets.asyncio.client.ClientConnection object at 0x7f42dc74fd10>
+2026-03-31T06:38:47.429743278Z [inf]            └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T06:38:47.429748032Z [inf]  
+2026-03-31T06:38:47.429752757Z [inf]    File "/usr/local/lib/python3.11/site-packages/websockets/asyncio/connection.py", line 478, in send
+2026-03-31T06:38:47.429756126Z [inf]      async with self.send_context():
+2026-03-31T06:38:47.429762171Z [inf]                 │    └ <function Connection.send_context at 0x7f4262aaf920>
+2026-03-31T06:38:47.429765791Z [inf]                 └ <websockets.asyncio.client.ClientConnection object at 0x7f42dc74fd10>
+2026-03-31T06:38:47.429769041Z [inf]    File "/usr/local/lib/python3.11/contextlib.py", line 210, in __aenter__
+2026-03-31T06:38:47.429772013Z [inf]      return await anext(self.gen)
+2026-03-31T06:38:47.429775641Z [inf]                         │    └ <async_generator object Connection.send_context at 0x7f4262acdcf0>
+2026-03-31T06:38:47.429779760Z [inf]                         └ <contextlib._AsyncGeneratorContextManager object at 0x7f42608828d0>
+2026-03-31T06:38:47.429782698Z [inf]    File "/usr/local/lib/python3.11/site-packages/websockets/asyncio/connection.py", line 965, in send_context
+2026-03-31T06:38:47.429785544Z [inf]      raise self.protocol.close_exc from original_exc
+2026-03-31T06:38:47.429791339Z [inf]            │    │        │              └ TimeoutError('timed out while closing connection')
+2026-03-31T06:38:47.429794124Z [inf]            │    │        └ <property object at 0x7f42e6ddd4e0>
+2026-03-31T06:38:47.429797378Z [inf]            │    └ <websockets.client.ClientProtocol object at 0x7f4262a4ed50>
+2026-03-31T06:38:47.430681025Z [inf]            └ <websockets.asyncio.client.ClientConnection object at 0x7f42dc74fd10>
+2026-03-31T06:38:47.430685688Z [inf]  
+2026-03-31T06:38:47.430688822Z [inf]  websockets.exceptions.ConnectionClosedError: sent 1011 (internal error) keepalive ping timeout; no close frame received
+2026-03-31T06:39:07.336543604Z [inf]  2026-03-31 06:38:59.502 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:39:27.312530439Z [inf]  2026-03-31 06:39:21.848 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:39:47.311361538Z [inf]  2026-03-31 06:39:40.315 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:40:07.142655842Z [inf]  2026-03-31 06:40:00.743 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:40:27.173372210Z [inf]  2026-03-31 06:40:21.134 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:40:47.146190731Z [inf]  2026-03-31 06:40:41.505 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:41:07.145513015Z [inf]  2026-03-31 06:41:01.896 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:41:27.079362441Z [inf]  2026-03-31 06:41:22.434 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:41:47.027992404Z [inf]  2026-03-31 06:41:42.842 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:42:07.027136672Z [inf]  2026-03-31 06:42:03.368 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:42:07.027140680Z [inf]  2026-03-31 06:42:03.531 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:42:26.924143965Z [inf]  2026-03-31 06:42:23.889 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:42:46.929573662Z [inf]  2026-03-31 06:42:42.504 | INFO     | logging:callHandlers:1706 - Got difference for channel 1809746691 updates
+2026-03-31T06:42:46.929578837Z [inf]  2026-03-31 06:42:44.381 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:43:46.962599078Z [inf]  2026-03-31 06:43:42.450 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:43:46.962610352Z [inf]  2026-03-31 06:43:42.610 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:43:46.962614593Z [inf]  2026-03-31 06:43:45.916 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:44:06.957906638Z [inf]  2026-03-31 06:44:06.375 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:44:26.783273264Z [inf]  2026-03-31 06:44:26.708 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:44:26.869299010Z [inf]  2026-03-31 06:44:26.864 | INFO     | logging:callHandlers:1706 - Got difference for channel 1621425154 updates
+2026-03-31T06:44:27.133735334Z [inf]  2026-03-31 06:44:27.048 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:44:47.015854600Z [inf]  2026-03-31 06:44:38.894 | INFO     | logging:callHandlers:1706 - Got difference for channel 1621425154 updates
+2026-03-31T06:44:47.160150866Z [inf]  2026-03-31 06:44:47.153 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:45:17.167858171Z [inf]  2026-03-31 06:45:07.576 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:45:17.167863486Z [inf]  2026-03-31 06:45:07.749 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:45:37.178483728Z [inf]  2026-03-31 06:45:28.035 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:45:37.178491429Z [inf]  2026-03-31 06:45:28.206 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:45:57.252088884Z [inf]  2026-03-31 06:45:48.509 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:46:17.180396989Z [inf]  2026-03-31 06:46:08.833 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:46:17.180407187Z [inf]  2026-03-31 06:46:09.009 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:46:17.180411768Z [inf]  2026-03-31 06:46:09.277 | INFO     | app.telegram.listener:_on_new_message:70 - Userbot detected message from Gold Pips Hunter: 🔴 Gold Sell Now @ 4561- 4564
+2026-03-31T06:46:17.180416466Z [inf]  
+2026-03-31T06:46:17.180420784Z [inf]  SL: 4570
+2026-03-31T06:46:17.180424457Z [inf]  
+2026-03-31T06:46:17.180427823Z [inf]  TP1: 4558
+2026-03-31T06:46:17.180431105Z [inf]  ...
+2026-03-31T06:46:17.180436743Z [inf]  2026-03-31 06:46:09.277 | INFO     | app.telegram.parser:parse_signal:78 - Using Average TP Strategy: (TP2:4555.0 + TP3:4552.0) / 2 = 4553.5
+2026-03-31T06:46:17.180441073Z [inf]  2026-03-31 06:46:09.277 | INFO     | app.telegram.listener:_on_new_message:92 - Found valid signal via Userbot (Source: telegram_channel)
+2026-03-31T06:46:17.180444378Z [inf]  2026-03-31 06:46:09.277 | INFO     | app.signals.executor:process_signal:31 - Processing signal: frxXAUUSD MULTDOWN | Stake: 5.0 | Mult: None
+2026-03-31T06:46:17.180448114Z [inf]  2026-03-31 06:46:09.294 | INFO     | app.signals.executor:process_signal:47 - Signal has entry price 4561.0. Saving as pending_limit.
+2026-03-31T06:46:17.180451784Z [inf]  2026-03-31 06:46:09.308 | INFO     | app.telegram.listener:_on_new_message:97 - Userbot Trade Result: pending_limit
+2026-03-31T06:46:17.180455264Z [inf]  2026-03-31 06:46:10.052 | INFO     | app.signals.manager:_check_pending_orders:65 - Triggering Limit Order for frxXAUUSD at 4561.03 (Target: 4561.0)
+2026-03-31T06:46:17.180458268Z [inf]  2026-03-31 06:46:10.066 | INFO     | app.signals.executor:process_signal:31 - Processing signal: frxXAUUSD MULTDOWN | Stake: 5.0 | Mult: None
+2026-03-31T06:46:17.180461615Z [inf]  2026-03-31 06:46:10.091 | ERROR    | app.signals.manager:_monitor_loop:34 - Error in LimitOrderManager loop: WebSocket not connected
+2026-03-31T06:46:37.150358406Z [inf]  2026-03-31 06:46:29.264 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:46:57.151302698Z [inf]  2026-03-31 06:46:49.786 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:47:17.170127920Z [inf]  2026-03-31 06:47:10.268 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:47:37.090764542Z [inf]  2026-03-31 06:47:30.761 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:47:57.081295505Z [inf]  2026-03-31 06:47:51.197 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:48:17.080830079Z [inf]  2026-03-31 06:48:11.913 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:48:36.889627563Z [inf]  2026-03-31 06:48:32.274 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:48:56.868875649Z [inf]  2026-03-31 06:48:52.759 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:49:16.862854083Z [inf]  2026-03-31 06:49:13.179 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:49:36.667419523Z [inf]  2026-03-31 06:49:33.647 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:49:36.667424840Z [inf]  2026-03-31 06:49:34.349 | INFO     | logging:callHandlers:1706 - Got difference for channel 1621425154 updates
+2026-03-31T06:49:56.592384995Z [inf]  2026-03-31 06:49:54.090 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:50:16.596130170Z [inf]  2026-03-31 06:50:14.578 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:50:36.461047225Z [inf]  2026-03-31 06:50:35.032 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:50:56.445931026Z [inf]  2026-03-31 06:50:55.602 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:51:16.434721221Z [inf]  2026-03-31 06:51:16.058 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:51:36.427832430Z [inf]  2026-03-31 06:51:36.422 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:52:06.458852603Z [inf]  2026-03-31 06:51:56.884 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:52:12.973676819Z [inf]  2026-03-31 06:52:12.969 | INFO     | logging:callHandlers:1706 - Got difference for channel 3000228304 updates
+2026-03-31T06:52:17.326451818Z [inf]  2026-03-31 06:52:17.320 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:52:47.274758166Z [inf]  2026-03-31 06:52:37.728 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:53:07.290016107Z [inf]  2026-03-31 06:52:58.203 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:53:27.294960549Z [inf]  2026-03-31 06:53:18.547 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:53:47.477958175Z [inf]  2026-03-31 06:53:38.947 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:54:07.344173715Z [inf]  2026-03-31 06:53:59.486 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:54:27.314448192Z [inf]  2026-03-31 06:54:21.094 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:54:47.339711663Z [inf]  2026-03-31 06:54:40.380 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:55:07.390208311Z [inf]  2026-03-31 06:55:00.926 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:55:27.314233939Z [inf]  2026-03-31 06:55:21.323 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:55:47.336035488Z [inf]  2026-03-31 06:55:41.899 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:56:07.364536267Z [inf]  2026-03-31 06:56:02.135 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:56:27.348761769Z [inf]  2026-03-31 06:56:22.670 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:56:47.247329995Z [inf]  2026-03-31 06:56:43.110 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:56:52.869746380Z [inf]  2026-03-31 06:56:52.606 | INFO     | app.telegram.listener:_on_new_message:70 - Userbot detected message from Gold Pips Hunter: XAUUSD/ Gold 🔥✔️
+2026-03-31T06:56:52.869749666Z [inf]  
+2026-03-31T06:56:52.869752712Z [inf]  TP1 HIT, 40 Pips Profit done! 📊😍...
+2026-03-31T06:57:12.834352016Z [inf]  2026-03-31 06:57:03.536 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:57:12.834356521Z [inf]  2026-03-31 06:57:03.942 | INFO     | app.telegram.listener:_on_new_message:70 - Userbot detected message from Gold Pips Hunter: XAUUSD/ Gold 🔥✔️
+2026-03-31T06:57:12.834360084Z [inf]  
+2026-03-31T06:57:12.834363759Z [inf]  TP2 HIT, 70 Pips Profit done! 📊😍...
+2026-03-31T06:57:32.806583771Z [inf]  2026-03-31 06:57:24.055 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:57:52.827778854Z [inf]  2026-03-31 06:57:44.410 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:58:12.918853074Z [inf]  2026-03-31 06:58:04.911 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:58:32.783869947Z [inf]  2026-03-31 06:58:25.233 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:58:32.783879942Z [inf]  2026-03-31 06:58:25.425 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T06:58:52.774163775Z [inf]  2026-03-31 06:58:45.595 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:59:12.804553072Z [inf]  2026-03-31 06:59:05.993 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:59:32.758339235Z [inf]  2026-03-31 06:59:26.378 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T06:59:52.690258789Z [inf]  2026-03-31 06:59:47.115 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:00:12.701354112Z [inf]  2026-03-31 07:00:07.702 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:00:32.701254943Z [inf]  2026-03-31 07:00:28.073 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:00:32.701262263Z [inf]  2026-03-31 07:00:29.684 | INFO     | logging:callHandlers:1706 - Got difference for channel 2059041459 updates
+2026-03-31T07:00:52.484221921Z [inf]  2026-03-31 07:00:48.542 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:00:57.722213830Z [inf]  2026-03-31 07:00:57.693 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:00:57.722219770Z [inf]  Traceback (most recent call last):
+2026-03-31T07:00:57.722223281Z [inf]  
+2026-03-31T07:00:57.722226441Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:00:57.722229603Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:00:57.722233687Z [inf]      │       │                                        └ 8080
+2026-03-31T07:00:57.722236448Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:00:57.722240920Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:00:57.722243902Z [inf]  
+2026-03-31T07:00:57.722247414Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:00:57.722251077Z [inf]      server.run()
+2026-03-31T07:00:57.722254763Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:00:57.722258622Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:00:57.722262253Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:00:57.722265048Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:00:57.722267758Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:00:57.722270397Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:00:57.722273820Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:00:57.722842310Z [inf]             │           │    │             └ None
+2026-03-31T07:00:57.722843902Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:00:57.722848223Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:00:57.722850558Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:00:57.722854624Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:00:57.722855719Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:00:57.722860307Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:00:57.722860613Z [inf]      self.run_forever()
+2026-03-31T07:00:57.722865255Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:00:57.722866010Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:00:57.722868895Z [inf]      return runner.run(main)
+2026-03-31T07:00:57.722872573Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:00:57.722875358Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:00:57.722878138Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:00:57.722881119Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:00:57.722883914Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:00:57.722887562Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:00:57.722890631Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:00:57.723921986Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:00:57.723925798Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:00:57.723929740Z [inf]      self._run_once()
+2026-03-31T07:00:57.723933546Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:00:57.723937625Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:00:57.723941847Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:00:57.723944744Z [inf]      handle._run()
+2026-03-31T07:00:57.723948727Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:00:57.723951462Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4262c33d60>()>
+2026-03-31T07:00:57.723954487Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:00:57.723957709Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:00:57.723960719Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:00:57.723963965Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f4262c33d60>()>
+2026-03-31T07:00:57.723967334Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:00:57.723970144Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f4262c33d60>()>
+2026-03-31T07:00:57.723973234Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:00:57.723976069Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4262c33d60>()>
+2026-03-31T07:00:57.723979530Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:00:57.724780278Z [inf]      await self.__update_fetcher()
+2026-03-31T07:00:57.724784492Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:00:57.724788098Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:00:57.724797161Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:00:57.724800287Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:00:57.724803290Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:00:57.724806342Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:00:57.724809690Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:00:57.724814334Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:00:57.724818791Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:00:57.724822619Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:00:57.724826072Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:00:57.724829575Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:00:57.725764732Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f42601235b0>
+2026-03-31T07:00:57.725777624Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:00:57.725782417Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:00:57.725785634Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:00:57.725789325Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:00:57.725792385Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:00:57.725796116Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:00:57.725799106Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:00:57.725802250Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:00:57.725804928Z [inf]      await coroutine
+2026-03-31T07:00:57.725807720Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:00:57.725810417Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:00:57.725813395Z [inf]      await coroutine
+2026-03-31T07:00:57.725817282Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262c36a40>
+2026-03-31T07:00:57.725820022Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:00:57.725822679Z [inf]      return await self.callback(update, context)
+2026-03-31T07:00:57.726936071Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:00:57.726941223Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:00:57.726945689Z [inf]                   └ MessageHandler[callback=TelegramBot.status_handler]
+2026-03-31T07:00:57.726954276Z [inf]  
+2026-03-31T07:00:57.726955515Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:00:57.726959106Z [inf]    File "/app/app/telegram/bot.py", line 244, in status_handler
+2026-03-31T07:00:57.726963064Z [inf]      port_res = await self.trader.client.send_request({"portfolio": 1})
+2026-03-31T07:00:57.726967164Z [inf]                       │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:00:57.726971398Z [inf]                       │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:00:57.726975558Z [inf]                       │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:00:57.726979763Z [inf]                       └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:00:57.726983378Z [inf]  
+2026-03-31T07:00:57.726987533Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:00:57.726991493Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:00:57.726995340Z [inf]  
+2026-03-31T07:01:17.714899088Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:01:17.714906876Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:01:17.714911531Z [inf]  2026-03-31 07:01:08.966 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:01:17.714912266Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:01:17.714916002Z [inf]  2026-03-31 07:01:12.379 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:01:17.714918601Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:01:17.714923566Z [inf]  Traceback (most recent call last):
+2026-03-31T07:01:17.714924669Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:01:17.714929749Z [inf]  
+2026-03-31T07:01:17.714930443Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:01:17.714933978Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:01:17.714937392Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:01:17.714940584Z [inf]      │       │                                        └ 8080
+2026-03-31T07:01:17.714944114Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:01:17.714947594Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:01:17.714950922Z [inf]  
+2026-03-31T07:01:17.714954241Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:01:17.714957675Z [inf]      server.run()
+2026-03-31T07:01:17.715494551Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:01:17.715497109Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:01:17.715501089Z [inf]             │           │    │             └ None
+2026-03-31T07:01:17.715507054Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:01:17.715508418Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:01:17.715513702Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:01:17.715516095Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:01:17.715520803Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:01:17.715523481Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:01:17.715528196Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:01:17.715530392Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:01:17.715534667Z [inf]      return runner.run(main)
+2026-03-31T07:01:17.715537793Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:01:17.715541934Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:01:17.715544810Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:01:17.715549553Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:01:17.715552967Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:01:17.716959921Z [inf]      self.run_forever()
+2026-03-31T07:01:17.716967744Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:01:17.716968187Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:01:17.716975084Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:01:17.716975454Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4262c33ca0>()>
+2026-03-31T07:01:17.716980737Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:01:17.716983333Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:01:17.716985515Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:01:17.716990094Z [inf]      self._run_once()
+2026-03-31T07:01:17.716990906Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:01:17.716996931Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f4262c33ca0>()>
+2026-03-31T07:01:17.716997821Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:01:17.717003630Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:01:17.717004916Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:01:17.717007195Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f4262c33ca0>()>
+2026-03-31T07:01:17.717010492Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:01:17.717013366Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4262c33ca0>()>
+2026-03-31T07:01:17.717027062Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:01:17.717031220Z [inf]      handle._run()
+2026-03-31T07:01:17.718231120Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:01:17.718236373Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:01:17.718241155Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:01:17.718241367Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:01:17.718248466Z [inf]      await self.__update_fetcher()
+2026-03-31T07:01:17.718252886Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:01:17.718257175Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:01:17.718261981Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:01:17.718267216Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:01:17.718271682Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:01:17.718276129Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:01:17.718280571Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:01:17.718284883Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:01:17.719193435Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:01:17.719198306Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:01:17.719201721Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:01:17.719205175Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:01:17.719210175Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:01:17.719213984Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:01:17.719218296Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:01:17.719221028Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:01:17.719224052Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:01:17.719227768Z [inf]      await coroutine
+2026-03-31T07:01:17.719230905Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:01:17.719233913Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:01:17.719236857Z [inf]      await coroutine
+2026-03-31T07:01:17.719241023Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262ab1d40>
+2026-03-31T07:01:17.719244320Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:01:17.719247460Z [inf]      return await self.callback(update, context)
+2026-03-31T07:01:17.720595221Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f4262c0eb30>
+2026-03-31T07:01:17.720599949Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:01:17.720605918Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:01:17.720610457Z [inf]                   └ MessageHandler[callback=TelegramBot.balance_handler]
+2026-03-31T07:01:17.720615894Z [inf]  
+2026-03-31T07:01:17.720619255Z [inf]    File "/app/app/telegram/bot.py", line 105, in balance_handler
+2026-03-31T07:01:17.720622352Z [inf]      msg = await self._format_all_balances()
+2026-03-31T07:01:17.720625287Z [inf]                  │    └ <function TelegramBot._format_all_balances at 0x7f42e4259da0>
+2026-03-31T07:01:17.720628395Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:01:17.720631821Z [inf]  
+2026-03-31T07:01:17.720635164Z [inf]    File "/app/app/telegram/bot.py", line 214, in _format_all_balances
+2026-03-31T07:01:17.720638377Z [inf]      res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+2026-03-31T07:01:17.720641546Z [inf]                  │    │      │      │                          │    │      │      └ 'tdFxSPAvGx9jdWw'
+2026-03-31T07:01:17.720644647Z [inf]                  │    │      │      │                          │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:01:17.720647850Z [inf]                  │    │      │      │                          │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:01:17.720651331Z [inf]                  │    │      │      │                          └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:01:17.721507576Z [inf]                  │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:01:17.721511482Z [inf]                  │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:01:17.721514706Z [inf]                  │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:01:17.721517770Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:01:17.721521166Z [inf]  
+2026-03-31T07:01:17.721524470Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:01:17.721527520Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:01:17.721530416Z [inf]  
+2026-03-31T07:01:17.721533336Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:01:37.725500490Z [inf]  2026-03-31 07:01:29.341 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:01:57.612278544Z [inf]  2026-03-31 07:01:49.840 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:02:17.511024885Z [inf]  2026-03-31 07:02:10.258 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:02:47.606857932Z [inf]  2026-03-31 07:02:42.465 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:02:47.606861808Z [inf]  2026-03-31 07:02:42.658 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T07:03:27.517418831Z [inf]  2026-03-31 07:03:26.578 | INFO     | logging:callHandlers:1706 - Got difference for channel 2848189989 updates
+2026-03-31T07:03:27.517423804Z [inf]  2026-03-31 07:03:27.241 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:03:32.413098104Z [inf]  2026-03-31 07:03:32.381 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:04:02.650029773Z [inf]  2026-03-31 07:03:52.702 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:04:22.628593660Z [inf]  2026-03-31 07:04:13.145 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:04:42.694123301Z [inf]  2026-03-31 07:04:33.532 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:05:02.712567326Z [inf]  2026-03-31 07:04:54.139 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:05:09.527937184Z [inf]  2026-03-31 07:05:09.415 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T07:05:14.579322669Z [inf]  2026-03-31 07:05:14.554 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:05:34.445499723Z [inf]  2026-03-31 07:05:27.267 | INFO     | logging:callHandlers:1706 - Got difference for account updates
+2026-03-31T07:05:34.445503739Z [inf]  2026-03-31 07:05:27.422 | INFO     | logging:callHandlers:1706 - Got difference for channel 2059041459 updates
+2026-03-31T07:05:35.308628465Z [inf]  2026-03-31 07:05:35.297 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:06:05.375254753Z [inf]  2026-03-31 07:05:55.709 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:06:25.417572246Z [inf]  2026-03-31 07:06:16.196 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:06:45.286714775Z [inf]  2026-03-31 07:06:42.469 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:07:05.283518795Z [inf]  2026-03-31 07:06:57.161 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:07:25.429643851Z [inf]  2026-03-31 07:07:17.767 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:07:45.301173951Z [inf]  2026-03-31 07:07:38.187 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:08:05.305919768Z [inf]  2026-03-31 07:07:58.684 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:08:25.453103356Z [inf]  2026-03-31 07:08:19.126 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:08:45.314487679Z [inf]  2026-03-31 07:08:39.568 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:09:15.369146656Z [inf]  2026-03-31 07:09:14.168 | INFO     | logging:callHandlers:1706 - Got difference for channel 2848189989 updates
+2026-03-31T07:09:15.369150088Z [inf]  2026-03-31 07:09:14.507 | INFO     | logging:callHandlers:1706 - Got difference for channel 2056163145 updates
+2026-03-31T07:09:15.369152955Z [inf]  2026-03-31 07:09:14.856 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:09:21.477512597Z [inf]  2026-03-31 07:09:21.290 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:09:41.352564907Z [inf]  2026-03-31 07:09:41.339 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:10:11.552596886Z [inf]  2026-03-31 07:10:01.719 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:10:31.377082493Z [inf]  2026-03-31 07:10:22.404 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:10:51.358251341Z [inf]  2026-03-31 07:10:42.937 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:11:11.351856177Z [inf]  2026-03-31 07:11:03.202 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:11:31.532914800Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:11:31.532923947Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:11:31.532929126Z [inf]  
+2026-03-31T07:11:31.532933899Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:11:31.532938578Z [inf]      server.run()
+2026-03-31T07:11:31.532942780Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:11:31.532946980Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:11:31.532951013Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:11:31.532955503Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:11:31.532959789Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:11:31.532963659Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:11:31.532966639Z [inf]  2026-03-31 07:11:23.625 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:11:31.532969736Z [inf]  2026-03-31 07:11:31.120 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:11:31.532973015Z [inf]  Traceback (most recent call last):
+2026-03-31T07:11:31.532976628Z [inf]  
+2026-03-31T07:11:31.532982268Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:11:31.532985650Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:11:31.532988999Z [inf]      │       │                                        └ 8080
+2026-03-31T07:11:31.533270390Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:11:31.533276907Z [inf]             │           │    │             └ None
+2026-03-31T07:11:31.533281532Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:11:31.533285762Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:11:31.533289799Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:11:31.533295422Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:11:31.533300353Z [inf]      return runner.run(main)
+2026-03-31T07:11:31.533304694Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:11:31.533308691Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:11:31.533313425Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:11:31.533317314Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:11:31.533321567Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:11:31.533325959Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:11:31.533329949Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:11:31.533334506Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:11:31.533339592Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:11:31.533343690Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:11:31.545533912Z [inf]      self.run_forever()
+2026-03-31T07:11:31.545540021Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:11:31.545543435Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:11:31.545547285Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:11:31.545550692Z [inf]      self._run_once()
+2026-03-31T07:11:31.545553967Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:11:31.545557806Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:11:31.545561272Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:11:31.545564623Z [inf]      handle._run()
+2026-03-31T07:11:31.545567788Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:11:31.545570670Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f424874b220>()>
+2026-03-31T07:11:31.545573542Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:11:31.545576683Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:11:31.545579467Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:11:31.545582393Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f424874b220>()>
+2026-03-31T07:11:31.545585553Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:11:31.545588462Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f424874b220>()>
+2026-03-31T07:11:31.545591653Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:11:31.545594611Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f424874b220>()>
+2026-03-31T07:11:31.545970642Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:11:31.545974741Z [inf]      await self.__update_fetcher()
+2026-03-31T07:11:31.545978486Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:11:31.545982847Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:11:31.545986416Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:11:31.545990034Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:11:31.545993087Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:11:31.545996374Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:11:31.546000473Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:11:31.546004428Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:11:31.546007966Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:11:31.546011329Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:11:31.546014799Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:11:31.549070285Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:11:31.549074700Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:11:31.549078430Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:11:31.549082732Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:11:31.549086158Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:11:31.549089281Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:11:31.549092632Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:11:31.549096227Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:11:31.549099661Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:11:31.549103410Z [inf]      await coroutine
+2026-03-31T07:11:31.549106462Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:11:31.549109873Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:11:31.549115136Z [inf]      await coroutine
+2026-03-31T07:11:31.549119362Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262c36b40>
+2026-03-31T07:11:31.549122940Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:11:31.549126355Z [inf]      return await self.callback(update, context)
+2026-03-31T07:11:31.550077917Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f4262c0fb60>
+2026-03-31T07:11:31.550087099Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:11:31.550091149Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:11:31.550094291Z [inf]                   └ MessageHandler[callback=TelegramBot.balance_handler]
+2026-03-31T07:11:31.550097950Z [inf]  
+2026-03-31T07:11:31.550101387Z [inf]    File "/app/app/telegram/bot.py", line 105, in balance_handler
+2026-03-31T07:11:31.550106406Z [inf]      msg = await self._format_all_balances()
+2026-03-31T07:11:31.550109921Z [inf]                  │    └ <function TelegramBot._format_all_balances at 0x7f42e4259da0>
+2026-03-31T07:11:31.550112729Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:11:31.550115849Z [inf]  
+2026-03-31T07:11:31.550119437Z [inf]    File "/app/app/telegram/bot.py", line 214, in _format_all_balances
+2026-03-31T07:11:31.550123058Z [inf]      res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+2026-03-31T07:11:31.550126247Z [inf]                  │    │      │      │                          │    │      │      └ 'tdFxSPAvGx9jdWw'
+2026-03-31T07:11:31.550129600Z [inf]                  │    │      │      │                          │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:11:31.550132710Z [inf]                  │    │      │      │                          │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:11:31.550136087Z [inf]                  │    │      │      │                          └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:11:31.550878948Z [inf]                  │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:11:31.550884691Z [inf]                  │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:11:31.550888145Z [inf]                  │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:11:31.550891067Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:11:31.550894141Z [inf]  
+2026-03-31T07:11:31.550897141Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:11:31.550900074Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:11:31.550903435Z [inf]  
+2026-03-31T07:11:31.550906249Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:11:51.425647656Z [inf]  2026-03-31 07:11:44.355 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:12:11.425487407Z [inf]  2026-03-31 07:12:04.859 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:12:31.431394224Z [inf]  2026-03-31 07:12:25.272 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:12:51.426101180Z [inf]  2026-03-31 07:12:41.803 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:12:51.426106888Z [inf]  Traceback (most recent call last):
+2026-03-31T07:12:51.426112049Z [inf]  
+2026-03-31T07:12:51.426115315Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:12:51.426119007Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:12:51.426122643Z [inf]      │       │                                        └ 8080
+2026-03-31T07:12:51.426126324Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:12:51.426129956Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:12:51.426133247Z [inf]  
+2026-03-31T07:12:51.426137334Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:12:51.426140373Z [inf]      server.run()
+2026-03-31T07:12:51.426143376Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:12:51.426146182Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.426148907Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:12:51.426152287Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:12:51.426155931Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:12:51.426158713Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:12:51.426161846Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.427485909Z [inf]             │           │    │             └ None
+2026-03-31T07:12:51.427490380Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:12:51.427494827Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.427498637Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:12:51.427502367Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:12:51.427505649Z [inf]      return runner.run(main)
+2026-03-31T07:12:51.427508719Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:12:51.427511779Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:12:51.427514911Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:12:51.427518439Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:12:51.427521847Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:12:51.427525567Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:12:51.427529196Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:12:51.427532123Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.427535109Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:12:51.427538026Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:12:51.427541078Z [inf]      self.run_forever()
+2026-03-31T07:12:51.427544219Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:12:51.428378940Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.428386134Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:12:51.428390300Z [inf]      self._run_once()
+2026-03-31T07:12:51.428393465Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:12:51.428397310Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.428401034Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:12:51.428404398Z [inf]      handle._run()
+2026-03-31T07:12:51.428408087Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:12:51.428411590Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4248545d20>()>
+2026-03-31T07:12:51.428414927Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:12:51.428418566Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:12:51.428421778Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:12:51.428424884Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f4248545d20>()>
+2026-03-31T07:12:51.428428999Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:12:51.428432390Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f4248545d20>()>
+2026-03-31T07:12:51.428435375Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:12:51.428438671Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4248545d20>()>
+2026-03-31T07:12:51.428442210Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:12:51.429361996Z [inf]      await self.__update_fetcher()
+2026-03-31T07:12:51.429366592Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.429370356Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:12:51.429373347Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:12:51.429377382Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.429380513Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.429383726Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:12:51.429386837Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:12:51.429390714Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.429393952Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:12:51.429397258Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.429400585Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.429403537Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:12:51.430608562Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.430613113Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:12:51.430617296Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:12:51.430620417Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbb600>
+2026-03-31T07:12:51.430623543Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.430626831Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:12:51.430629742Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:12:51.430632589Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:12:51.430635537Z [inf]      await coroutine
+2026-03-31T07:12:51.430638771Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbb600>
+2026-03-31T07:12:51.430642057Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:12:51.430646416Z [inf]      await coroutine
+2026-03-31T07:12:51.430649641Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262c37340>
+2026-03-31T07:12:51.430652866Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:12:51.430656436Z [inf]      return await self.callback(update, context)
+2026-03-31T07:12:51.430660083Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f4248550ad0>
+2026-03-31T07:12:51.431500346Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.431504707Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:12:51.431509934Z [inf]                   └ MessageHandler[callback=TelegramBot.balance_handler]
+2026-03-31T07:12:51.431512239Z [inf]                  │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:12:51.431515847Z [inf]  
+2026-03-31T07:12:51.431519694Z [inf]    File "/app/app/telegram/bot.py", line 105, in balance_handler
+2026-03-31T07:12:51.431523427Z [inf]      msg = await self._format_all_balances()
+2026-03-31T07:12:51.431526104Z [inf]  
+2026-03-31T07:12:51.431527977Z [inf]                  │    └ <function TelegramBot._format_all_balances at 0x7f42e4259da0>
+2026-03-31T07:12:51.431532886Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:12:51.431541900Z [inf]    File "/app/app/telegram/bot.py", line 214, in _format_all_balances
+2026-03-31T07:12:51.431546319Z [inf]      res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+2026-03-31T07:12:51.431549967Z [inf]                  │    │      │      │                          │    │      │      └ 'tdFxSPAvGx9jdWw'
+2026-03-31T07:12:51.431553699Z [inf]                  │    │      │      │                          │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:12:51.431557790Z [inf]                  │    │      │      │                          │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:12:51.431561332Z [inf]                  │    │      │      │                          └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:12:51.432483259Z [inf]                  │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:12:51.432499303Z [inf]                  │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:12:51.432503142Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:12:51.432506603Z [inf]  
+2026-03-31T07:12:51.432510323Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:12:51.432513871Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:12:51.432517151Z [inf]  
+2026-03-31T07:12:51.432520341Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:12:51.432523543Z [inf]  2026-03-31 07:12:44.040 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:12:51.432526579Z [inf]  Traceback (most recent call last):
+2026-03-31T07:12:51.432529836Z [inf]  
+2026-03-31T07:12:51.432537140Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:12:51.432542235Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:12:51.432545606Z [inf]      │       │                                        └ 8080
+2026-03-31T07:12:51.432548940Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:12:51.432551889Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:12:51.432555050Z [inf]  
+2026-03-31T07:12:51.432558176Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:12:51.432665921Z [inf]      server.run()
+2026-03-31T07:12:51.432670815Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:12:51.432676504Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.435281624Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:12:51.435292267Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:12:51.435293561Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:12:51.435298340Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:12:51.435303786Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:12:51.435304586Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:12:51.435311176Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:12:51.435312688Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:12:51.435312839Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:12:51.435321475Z [inf]      return runner.run(main)
+2026-03-31T07:12:51.435321928Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:12:51.435327668Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:12:51.435336746Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:12:51.435336804Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.435343109Z [inf]             │           │    │             └ None
+2026-03-31T07:12:51.435347172Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:12:51.435351569Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:12:51.445745989Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:12:51.445747492Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f4248544e20>()>
+2026-03-31T07:12:51.445754018Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.445758131Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:12:51.445762372Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:12:51.445766248Z [inf]      self.run_forever()
+2026-03-31T07:12:51.445769023Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:12:51.445772052Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.445774875Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:12:51.445779207Z [inf]      self._run_once()
+2026-03-31T07:12:51.445781995Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:12:51.445785763Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:12:51.445789737Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:12:51.445792503Z [inf]      handle._run()
+2026-03-31T07:12:51.445795221Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:12:51.445797836Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4248544e20>()>
+2026-03-31T07:12:51.445800651Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:12:51.445803310Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:12:51.445806012Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:12:51.458589786Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:12:51.458596309Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:12:51.458596638Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.458606843Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:12:51.458609240Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f4248544e20>()>
+2026-03-31T07:12:51.458615383Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:12:51.458618028Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:12:51.458621153Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.458627560Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f4248544e20>()>
+2026-03-31T07:12:51.458627700Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.458633865Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:12:51.458636149Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:12:51.458639445Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:12:51.458643821Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.458646078Z [inf]      await self.__update_fetcher()
+2026-03-31T07:12:51.461210159Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.461216356Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.461221110Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:12:51.461225574Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:12:51.461229226Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:12:51.461233210Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:12:51.461238501Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:12:51.461242344Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.461245783Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:12:51.461249145Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:12:51.461252729Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:12:51.461256647Z [inf]      await coroutine
+2026-03-31T07:12:51.461260137Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbbec0>
+2026-03-31T07:12:51.461263627Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:12:51.463562415Z [inf]      await coroutine
+2026-03-31T07:12:51.463566883Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262ab1d40>
+2026-03-31T07:12:51.463570239Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:12:51.463575401Z [inf]      return await self.callback(update, context)
+2026-03-31T07:12:51.463578446Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f4262c0faf0>
+2026-03-31T07:12:51.463581650Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:12:51.463584796Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:12:51.463588124Z [inf]                   └ MessageHandler[callback=TelegramBot.status_handler]
+2026-03-31T07:12:51.463591519Z [inf]  
+2026-03-31T07:12:51.463594896Z [inf]    File "/app/app/telegram/bot.py", line 244, in status_handler
+2026-03-31T07:12:51.463597881Z [inf]      port_res = await self.trader.client.send_request({"portfolio": 1})
+2026-03-31T07:12:51.463600770Z [inf]                       │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:12:51.463603939Z [inf]                       │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:12:51.463606865Z [inf]                       │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:12:51.463609739Z [inf]                       └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:12:51.463612994Z [inf]  
+2026-03-31T07:12:51.463616065Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:12:51.463620034Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:12:51.464721654Z [inf]  
+2026-03-31T07:12:51.464725404Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:12:51.464728116Z [inf]  2026-03-31 07:12:45.757 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:13:11.465565977Z [inf]  2026-03-31 07:13:06.143 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:13:31.607718386Z [inf]  2026-03-31 07:13:26.625 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:13:51.556576828Z [inf]  2026-03-31 07:13:48.066 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:13:51.556582889Z [inf]  2026-03-31 07:13:50.318 | INFO     | logging:callHandlers:1706 - Got difference for account updates
+2026-03-31T07:13:51.556586029Z [inf]  2026-03-31 07:13:50.477 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:14:11.545331674Z [inf]  2026-03-31 07:14:07.539 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:14:20.282625075Z [inf]  2026-03-31 07:14:20.277 | INFO     | logging:callHandlers:1706 - Got difference for channel 1758611100 updates
+2026-03-31T07:14:28.346062015Z [inf]  2026-03-31 07:14:28.325 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:14:58.359477202Z [inf]  2026-03-31 07:14:48.532 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:15:18.061044890Z [inf]  2026-03-31 07:15:09.039 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:15:38.049664487Z [inf]  2026-03-31 07:15:32.919 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:15:57.870251487Z [inf]  2026-03-31 07:15:50.216 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:16:17.861001163Z [inf]  2026-03-31 07:16:10.621 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:16:37.862077290Z [inf]  2026-03-31 07:16:31.110 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:16:57.950313124Z [inf]  2026-03-31 07:16:51.490 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:17:17.784350807Z [inf]  2026-03-31 07:17:11.894 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:17:37.768328607Z [inf]  2026-03-31 07:17:28.380 | INFO     | logging:callHandlers:1706 - Got difference for channel 1868696363 updates
+2026-03-31T07:17:37.768333722Z [inf]  2026-03-31 07:17:32.403 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:17:57.513214090Z [inf]  2026-03-31 07:17:52.858 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:18:17.563761810Z [inf]  2026-03-31 07:18:13.559 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:18:37.565902808Z [inf]  2026-03-31 07:18:33.962 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:18:57.286720182Z [inf]  2026-03-31 07:18:54.361 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:19:17.275773868Z [inf]  2026-03-31 07:19:14.838 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:19:37.061464423Z [inf]  2026-03-31 07:19:27.242 | INFO     | logging:callHandlers:1706 - Got difference for channel 1441780077 updates
+2026-03-31T07:19:37.061475628Z [inf]  2026-03-31 07:19:35.202 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:19:57.051751525Z [inf]  2026-03-31 07:19:55.606 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:20:17.058435485Z [inf]  2026-03-31 07:20:16.340 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:20:36.933886330Z [inf]  2026-03-31 07:20:36.625 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:21:06.958698668Z [inf]  2026-03-31 07:20:57.217 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:21:27.112036987Z [inf]  2026-03-31 07:21:17.590 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:21:46.947193900Z [inf]  2026-03-31 07:21:42.495 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:22:06.944905918Z [inf]  2026-03-31 07:21:58.492 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:22:11.159679538Z [inf]  2026-03-31 07:22:11.157 | INFO     | logging:callHandlers:1706 - Got difference for channel 2375177679 updates
+2026-03-31T07:22:18.962000261Z [inf]  2026-03-31 07:22:18.957 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:22:28.778636097Z [inf]  2026-03-31 07:22:28.666 | INFO     | app.telegram.bot:message_handler:402 - Admin DM Signal Candidate: SIGNAL ALERT
+2026-03-31T07:22:28.778639644Z [inf]  
+2026-03-31T07:22:28.778643218Z [inf]  BUY XAUUSD 4532.3
+2026-03-31T07:22:28.778646918Z [inf]  
+2026-03-31T07:22:28.778650756Z [inf]  🤑TP1: 4534.3
+2026-03-31T07:22:28.778654009Z [inf]  🤑TP2: 4537.3
+2026-03-31T07:22:28.778657174Z [inf]  🤑TP3: 4548.3
+2026-03-31T07:22:28.778661492Z [inf]  🔴SL: 4516.3
+2026-03-31T07:22:28.778664624Z [inf]  2026-03-31 07:22:28.666 | INFO     | app.telegram.parser:parse_signal:78 - Using Average TP Strategy: (TP2:4537.3 + TP3:4548.3) / 2 = 4542.8
+2026-03-31T07:22:28.778668304Z [inf]  2026-03-31 07:22:28.666 | INFO     | app.telegram.bot:message_handler:409 - Manual Signal Parsing Success: frxXAUUSD MULTUP
+2026-03-31T07:22:28.778671362Z [inf]  2026-03-31 07:22:28.666 | INFO     | app.signals.executor:process_signal:31 - Processing signal: frxXAUUSD MULTUP | Stake: 5.0 | Mult: None
+2026-03-31T07:22:28.778674562Z [inf]  2026-03-31 07:22:28.680 | INFO     | app.signals.executor:process_signal:47 - Signal has entry price 4532.3. Saving as pending_limit.
+2026-03-31T07:22:48.610768414Z [inf]  2026-03-31 07:22:39.399 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:23:08.628910771Z [inf]  2026-03-31 07:22:59.728 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:23:28.650293346Z [inf]  2026-03-31 07:23:20.164 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:23:48.765397179Z [inf]  2026-03-31 07:23:40.918 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:24:08.642581715Z [inf]  2026-03-31 07:24:01.264 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:24:28.642087545Z [inf]  2026-03-31 07:24:21.766 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:24:48.632252088Z [inf]  2026-03-31 07:24:42.054 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:25:08.657256064Z [inf]  2026-03-31 07:25:02.450 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:25:28.421634506Z [inf]  2026-03-31 07:25:22.867 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:25:48.412957946Z [inf]  2026-03-31 07:25:43.345 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:26:08.509945291Z [inf]  2026-03-31 07:26:03.854 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:26:28.412190177Z [inf]  2026-03-31 07:26:24.165 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:26:34.882654013Z [inf]  2026-03-31 07:26:34.840 | ERROR    | logging:callHandlers:1706 - No error handlers are registered, logging exception.
+2026-03-31T07:26:34.882659533Z [inf]  Traceback (most recent call last):
+2026-03-31T07:26:34.882663831Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 606, in run
+2026-03-31T07:26:34.882665691Z [inf]  
+2026-03-31T07:26:34.882672564Z [inf]    File "/app/run.py", line 49, in <module>
+2026-03-31T07:26:34.882673357Z [inf]      server.run()
+2026-03-31T07:26:34.882677678Z [inf]      uvicorn.run("app.main:app", host="0.0.0.0", port=PORT, reload=False)
+2026-03-31T07:26:34.882680281Z [inf]      │      └ <function Server.run at 0x7f42e71ee8e0>
+2026-03-31T07:26:34.882684536Z [inf]      │       │                                        └ 8080
+2026-03-31T07:26:34.882686438Z [inf]      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:26:34.882689616Z [inf]      │       └ <function run at 0x7f42e722bce0>
+2026-03-31T07:26:34.882691871Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 75, in run
+2026-03-31T07:26:34.882698028Z [inf]      └ <module 'uvicorn' from '/usr/local/lib/python3.11/site-packages/uvicorn/__init__.py'>
+2026-03-31T07:26:34.882700692Z [inf]      return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2026-03-31T07:26:34.882704669Z [inf]  
+2026-03-31T07:26:34.882707262Z [inf]             │           │    │             │                      │    │      └ <function Config.get_loop_factory at 0x7f42e71645e0>
+2026-03-31T07:26:34.882710887Z [inf]             │           │    │             │                      │    └ <uvicorn.config.Config object at 0x7f42e8291e90>
+2026-03-31T07:26:34.882718790Z [inf]             │           │    │             │                      └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:26:34.884278493Z [inf]             │           │    │             └ None
+2026-03-31T07:26:34.884283525Z [inf]             │           │    └ <function Server.serve at 0x7f42e71ee980>
+2026-03-31T07:26:34.884286742Z [inf]             │           └ <uvicorn.server.Server object at 0x7f42e70786d0>
+2026-03-31T07:26:34.884289885Z [inf]             └ <function asyncio_run at 0x7f42e7390e00>
+2026-03-31T07:26:34.884293201Z [inf]    File "/usr/local/lib/python3.11/site-packages/uvicorn/_compat.py", line 30, in asyncio_run
+2026-03-31T07:26:34.884296354Z [inf]      return runner.run(main)
+2026-03-31T07:26:34.884300174Z [inf]             │      │   └ <coroutine object Server.serve at 0x7f42e70332e0>
+2026-03-31T07:26:34.884303286Z [inf]             │      └ <function Runner.run at 0x7f42e74e3600>
+2026-03-31T07:26:34.884306480Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:26:34.884309221Z [inf]    File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+2026-03-31T07:26:34.884311960Z [inf]      return self._loop.run_until_complete(task)
+2026-03-31T07:26:34.884314703Z [inf]             │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:79> wai...
+2026-03-31T07:26:34.884317286Z [inf]             │    │     └ <function BaseEventLoop.run_until_complete at 0x7f42e74e1260>
+2026-03-31T07:26:34.884319975Z [inf]             │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:26:34.884322496Z [inf]             └ <asyncio.runners.Runner object at 0x7f42e820e7d0>
+2026-03-31T07:26:34.884325566Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+2026-03-31T07:26:34.884328331Z [inf]      self.run_forever()
+2026-03-31T07:26:34.884331198Z [inf]      │    └ <function BaseEventLoop.run_forever at 0x7f42e74e11c0>
+2026-03-31T07:26:34.885288292Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:26:34.885298483Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+2026-03-31T07:26:34.885303034Z [inf]      self._run_once()
+2026-03-31T07:26:34.885307402Z [inf]      │    └ <function BaseEventLoop._run_once at 0x7f42e74e2fc0>
+2026-03-31T07:26:34.885311539Z [inf]      └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+2026-03-31T07:26:34.885315485Z [inf]    File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+2026-03-31T07:26:34.885319235Z [inf]      handle._run()
+2026-03-31T07:26:34.885326426Z [inf]      │      └ <function Handle._run at 0x7f42e7f45260>
+2026-03-31T07:26:34.885328529Z [inf]      │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+2026-03-31T07:26:34.885332001Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f42487759c0>()>
+2026-03-31T07:26:34.885336966Z [inf]    File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+2026-03-31T07:26:34.885337983Z [inf]      │    │            │    │           └ <Handle <TaskStepMethWrapper object at 0x7f42487759c0>()>
+2026-03-31T07:26:34.885342967Z [inf]      self._context.run(self._callback, *self._args)
+2026-03-31T07:26:34.885346152Z [inf]      │    │            │    └ <member '_callback' of 'Handle' objects>
+2026-03-31T07:26:34.885353970Z [inf]      │    │            └ <Handle <TaskStepMethWrapper object at 0x7f42487759c0>()>
+2026-03-31T07:26:34.885359114Z [inf]      │    └ <member '_context' of 'Handle' objects>
+2026-03-31T07:26:34.885363594Z [inf]      └ <Handle <TaskStepMethWrapper object at 0x7f42487759c0>()>
+2026-03-31T07:26:34.885367075Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1233, in _update_fetcher
+2026-03-31T07:26:34.886163426Z [inf]      await self.__update_fetcher()
+2026-03-31T07:26:34.886168023Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:26:34.886171676Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1229, in __update_fetcher
+2026-03-31T07:26:34.886174946Z [inf]      await self.__process_update_wrapper(update)
+2026-03-31T07:26:34.886178820Z [inf]            │                             └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:26:34.886182226Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:26:34.886186032Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1244, in __process_update_wrapper
+2026-03-31T07:26:34.886189905Z [inf]      await self._update_processor.process_update(update, self.process_update(update))
+2026-03-31T07:26:34.886193645Z [inf]            │    │                                │       │    │              └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:26:34.886197435Z [inf]            │    │                                │       │    └ <function Application.process_update at 0x7f42e41fc4a0>
+2026-03-31T07:26:34.886201912Z [inf]            │    │                                │       └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:26:34.886207538Z [inf]            │    │                                └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:26:34.886212987Z [inf]            │    └ <member '_update_processor' of 'Application' objects>
+2026-03-31T07:26:34.887036478Z [inf]            └ Application[bot=ExtBot[token=8795409410:AAEQwkwDN2kEje3sH7C-YtkOVS-MsofADuk]]
+2026-03-31T07:26:34.887040448Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 171, in process_update
+2026-03-31T07:26:34.887043704Z [inf]      await self.do_process_update(update, coroutine)
+2026-03-31T07:26:34.887047434Z [inf]            │    │                 │       └ <coroutine object Application.process_update at 0x7f4262cbb600>
+2026-03-31T07:26:34.887051176Z [inf]            │    │                 └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:26:34.887054765Z [inf]            │    └ <function SimpleUpdateProcessor.do_process_update at 0x7f42e41fdc60>
+2026-03-31T07:26:34.887058504Z [inf]            └ <telegram.ext._baseupdateprocessor.SimpleUpdateProcessor object at 0x7f4262ba68a0>
+2026-03-31T07:26:34.887062996Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_baseupdateprocessor.py", line 196, in do_process_update
+2026-03-31T07:26:34.887066916Z [inf]      await coroutine
+2026-03-31T07:26:34.887070308Z [inf]            └ <coroutine object Application.process_update at 0x7f4262cbb600>
+2026-03-31T07:26:34.887074104Z [inf]  > File "/usr/local/lib/python3.11/site-packages/telegram/ext/_application.py", line 1315, in process_update
+2026-03-31T07:26:34.887079038Z [inf]      await coroutine
+2026-03-31T07:26:34.887082991Z [inf]            └ <coroutine object BaseHandler.handle_update at 0x7f4262ab2640>
+2026-03-31T07:26:34.887086897Z [inf]    File "/usr/local/lib/python3.11/site-packages/telegram/ext/_handlers/basehandler.py", line 159, in handle_update
+2026-03-31T07:26:34.887090269Z [inf]      return await self.callback(update, context)
+2026-03-31T07:26:34.887094030Z [inf]                   │    │        │       └ <telegram.ext._callbackcontext.CallbackContext object at 0x7f4262c0d240>
+2026-03-31T07:26:34.888281364Z [inf]                   │    │        └ Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Gushe', id=6420777416, last_name='Gu shey', type=<Ch...
+2026-03-31T07:26:34.888285721Z [inf]                   │    └ <member 'callback' of 'BaseHandler' objects>
+2026-03-31T07:26:34.888289435Z [inf]                   └ MessageHandler[callback=TelegramBot.balance_handler]
+2026-03-31T07:26:34.888293383Z [inf]  
+2026-03-31T07:26:34.888298116Z [inf]    File "/app/app/telegram/bot.py", line 105, in balance_handler
+2026-03-31T07:26:34.888301993Z [inf]      msg = await self._format_all_balances()
+2026-03-31T07:26:34.888306411Z [inf]                  │    └ <function TelegramBot._format_all_balances at 0x7f42e4259da0>
+2026-03-31T07:26:34.888310396Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:26:34.888314216Z [inf]  
+2026-03-31T07:26:34.888317663Z [inf]    File "/app/app/telegram/bot.py", line 214, in _format_all_balances
+2026-03-31T07:26:34.888321687Z [inf]      res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+2026-03-31T07:26:34.888325220Z [inf]                  │    │      │      │                          │    │      │      └ 'tdFxSPAvGx9jdWw'
+2026-03-31T07:26:34.888329213Z [inf]                  │    │      │      │                          │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:26:34.888332643Z [inf]                  │    │      │      │                          │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:26:34.888335705Z [inf]                  │    │      │      │                          └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:26:34.888338713Z [inf]                  │    │      │      └ <function DerivClient.send_request at 0x7f42e4883f60>
+2026-03-31T07:26:34.889377234Z [inf]                  │    │      └ <app.deriv.client.DerivClient object at 0x7f42e6112e50>
+2026-03-31T07:26:34.889382531Z [inf]                  │    └ <app.deriv.trader.DerivTrader object at 0x7f4263cbfed0>
+2026-03-31T07:26:34.889386036Z [inf]                  └ <app.telegram.bot.TelegramBot object at 0x7f4263cbff10>
+2026-03-31T07:26:34.889389319Z [inf]  
+2026-03-31T07:26:34.889392908Z [inf]    File "/app/app/deriv/client.py", line 114, in send_request
+2026-03-31T07:26:34.889397116Z [inf]      raise Exception("WebSocket not connected")
+2026-03-31T07:26:34.889404014Z [inf]  
+2026-03-31T07:26:34.889407790Z [inf]  Exception: WebSocket not connected
+2026-03-31T07:26:44.603744571Z [inf]  2026-03-31 07:26:44.585 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:27:14.657196291Z [inf]  2026-03-31 07:27:04.978 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:27:34.763847656Z [inf]  2026-03-31 07:27:25.428 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:27:54.566321725Z [inf]  2026-03-31 07:27:45.800 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:28:14.550988245Z [inf]  2026-03-31 07:28:06.211 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:28:34.805741454Z [inf]  2026-03-31 07:28:26.691 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
+2026-03-31T07:28:54.671987087Z [inf]  2026-03-31 07:28:50.807 | INFO     | logging:callHandlers:1706 - Got difference for channel 1522771150 updates
