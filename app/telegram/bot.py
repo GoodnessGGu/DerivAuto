@@ -214,32 +214,15 @@ class TelegramBot:
             await query.edit_message_text(f"❌ *Switch Failed:* Could not authorize with {target_type.upper()} token.")
 
     async def _format_all_balances(self) -> str:
-        """Fetches and formats balances for all accounts."""
-        # Use existing auth details if possible, otherwise authorize
-        if self.trader.client.is_authorized:
-            res = await self.trader.client.send_request({"balance": 1, "account_list": 1})
-            key = "balance"
-        else:
-            res = await self.trader.client.send_request({"authorize": self.trader.client.token})
-            key = "authorize"
-            
-        if key not in res:
+        """Fetches and formats balances for all accounts using the authorize command."""
+        # 'authorize' is the most reliable way to get both balance and the full account list
+        res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+        
+        if "authorize" not in res:
             return "❌ Failed to fetch balance. Trading server may be unreachable."
             
-        # Standardize data access between 'balance' and 'authorize' responses
-        data = res[key]
-        if key == "balance" and "accounts" in data:
-            # Multi-account balance object
-            auth_data = data["accounts"][self.trader.client.token] # This might vary, let's stick to auth for now for simplicity if it works
-            # Actually, authorize is the most reliable for details. Let's stick to authorize but check connection first.
-            pass
-        
-        # Re-fetch auth if we need full details and we are confident in connection
-        if key == "balance":
-            res = await self.trader.client.send_request({"authorize": self.trader.client.token})
-            data = res.get("authorize", {})
-
-        auth = data
+        auth = res["authorize"]
+        accounts = auth.get("account_list", [])
         accounts = auth.get("account_list", [])
         
         # Current Account Balance
