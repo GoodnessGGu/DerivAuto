@@ -16,6 +16,7 @@ class DerivClient:
         self.is_authorized = False
         self.subscriptions: Dict[str, str] = {}  # symbol -> req_id or subscription_id
         self._callback_handlers: Dict[str, Callable] = {}
+        self._request_futures: Dict[str, asyncio.Future] = {}
         self._reconnect_delay = 1
         self._running = False
         self.connected_event = asyncio.Event()

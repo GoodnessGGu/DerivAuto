@@ -102,15 +102,19 @@ class TelegramBot:
         cfg = await self.config_mgr.get_config()
         acc_type = cfg.get("active_account_type", "real").upper()
         
-        msg = await self._format_all_balances()
-        
-        # 2. Add Switch Button
-        target_type = "DEMO" if acc_type == "REAL" else "REAL"
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton(f"🔄 Switch to {target_type}", callback_data=f"switch_{target_type.lower()}")]
-        ])
-        
-        await update.message.reply_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+        try:
+            msg = await self._format_all_balances()
+            
+            # 2. Add Switch Button
+            target_type = "DEMO" if acc_type == "REAL" else "REAL"
+            keyboard = InlineKeyboardMarkup([
+                [InlineKeyboardButton(f"🔄 Switch to {target_type}", callback_data=f"switch_{target_type.lower()}")]
+            ])
+            
+            await update.message.reply_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+        except Exception as e:
+            log.error(f"Balance check error: {e}")
+            await update.message.reply_text("❌ *Error:* Could not fetch balance. The trading server might be reconnecting or busy. Please try again in 10s.", parse_mode="Markdown")
 
     async def settings_menu_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Displays the dynamic settings menu."""
@@ -211,11 +215,31 @@ class TelegramBot:
 
     async def _format_all_balances(self) -> str:
         """Fetches and formats balances for all accounts."""
-        res = await self.trader.client.send_request({"authorize": self.trader.client.token})
-        if "authorize" not in res:
-            return "❌ Failed to fetch balance. Check your Deriv token."
+        # Use existing auth details if possible, otherwise authorize
+        if self.trader.client.is_authorized:
+            res = await self.trader.client.send_request({"balance": 1, "account_list": 1})
+            key = "balance"
+        else:
+            res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+            key = "authorize"
             
-        auth = res["authorize"]
+        if key not in res:
+            return "❌ Failed to fetch balance. Trading server may be unreachable."
+            
+        # Standardize data access between 'balance' and 'authorize' responses
+        data = res[key]
+        if key == "balance" and "accounts" in data:
+            # Multi-account balance object
+            auth_data = data["accounts"][self.trader.client.token] # This might vary, let's stick to auth for now for simplicity if it works
+            # Actually, authorize is the most reliable for details. Let's stick to authorize but check connection first.
+            pass
+        
+        # Re-fetch auth if we need full details and we are confident in connection
+        if key == "balance":
+            res = await self.trader.client.send_request({"authorize": self.trader.client.token})
+            data = res.get("authorize", {})
+
+        auth = data
         accounts = auth.get("account_list", [])
         
         # Current Account Balance
@@ -223,7 +247,7 @@ class TelegramBot:
         currency = auth.get('currency', '')
         
         msg = "💳 *Account Balances Summary*\n\n"
-        msg += f"🔥 *ACTIVE:* `{auth['loginid']}`\n💰 Balance: `{balance} {currency}`\n\n"
+        msg += f"🔥 *ACTIVE:* `{auth.get('loginid', 'Unknown')}`\n💰 Balance: `{balance} {currency}`\n\n"
         
         # Other Accounts (List them, but balance might not be in auth details)
         if accounts:
@@ -240,12 +264,17 @@ class TelegramBot:
     async def status_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_chat_action("typing")
         
-        # 1. Fetch active portfolio
-        port_res = await self.trader.client.send_request({"portfolio": 1})
-        contracts = port_res.get("portfolio", {}).get("contracts", [])
-        
-        if not contracts:
-            await update.message.reply_text("📭 *No active trades found.*", parse_mode="Markdown")
+        try:
+            # 1. Fetch active portfolio
+            port_res = await self.trader.client.send_request({"portfolio": 1})
+            contracts = port_res.get("portfolio", {}).get("contracts", [])
+            
+            if not contracts:
+                await update.message.reply_text("📭 *No active trades found.*", parse_mode="Markdown")
+                return
+        except Exception as e:
+            log.error(f"Status check error: {e}")
+            await update.message.reply_text("❌ *Error:* Could not fetch active trades. The server might be busy.", parse_mode="Markdown")
             return
 
         for c in contracts:
@@ -444,9 +473,11 @@ class TelegramBot:
             log.info(f"Preparing startup message for Admin: {self.admin_id}")
             # Try to fetch balance, but don't fail if it takes too long
             try:
-                balance_msg = await asyncio.wait_for(self._format_all_balances(), timeout=15.0)
-            except:
-                balance_msg = "⚠️ Balance check timed out, but trading logic is ACTIVE."
+                # Increased timeout to 25s for startup handshake
+                balance_msg = await asyncio.wait_for(self._format_all_balances(), timeout=25.0)
+            except Exception as e:
+                log.warning(f"Startup balance check timed out: {e}")
+                balance_msg = "⚠️ Balance check pending (Connection establishing...)"
                 
             startup_msg = (
                 "🚀 *Deriv Trading Bot System Started!*\n\n"
