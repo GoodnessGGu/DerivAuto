@@ -28,16 +28,15 @@ class DerivClient:
                 ssl_context = ssl.create_default_context()
                 self.ws = await websockets.connect(self.uri, ssl=ssl_context)
                 self._running = True
+                self.connected_event.set() # Allow send_request to proceed for authorization
                 
                 # Start listener background task
                 asyncio.create_task(self._listen())
                 
-                # Authorize
                 authorized = await self.authorize()
                 if authorized:
                     log.info("Deriv Authorization Successful")
                     self.is_authorized = True
-                    self.connected_event.set()
                     self._reconnect_delay = 1
                     # Resubscribe to previous symbols if any
                     await self._resubscribe()
