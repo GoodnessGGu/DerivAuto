@@ -31,6 +31,9 @@ signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_facto
 limit_manager = LimitOrderManager(signal_executor, async_session_factory, market_collector)
 trade_monitor = TradeMonitor(deriv_trader, async_session_factory, config_mgr)
 
+# Initialize Telegram Bot if token provided
+telegram_bot = None
+tg_token = os.getenv("TELEGRAM_BOT_TOKEN")
 if tg_token and tg_token != "your_bot_token_here":
     telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor, config_mgr)
     limit_manager.tg_bot = telegram_bot # Link bot to manager for notifications
