@@ -31,12 +31,10 @@ signal_executor = SignalExecutor(deriv_trader, risk_manager, async_session_facto
 limit_manager = LimitOrderManager(signal_executor, async_session_factory, market_collector)
 trade_monitor = TradeMonitor(deriv_trader, async_session_factory, config_mgr)
 
-# Initialize Telegram Bot if token provided
-telegram_bot = None
-tg_token = os.getenv("TELEGRAM_BOT_TOKEN")
 if tg_token and tg_token != "your_bot_token_here":
     telegram_bot = TelegramBot(tg_token, deriv_trader, signal_executor, config_mgr)
     limit_manager.tg_bot = telegram_bot # Link bot to manager for notifications
+    signal_executor.tg_bot = telegram_bot # Link bot to executor for initial signal alerts
 
 # Initialize Telegram Userbot Listener (Telethon)
 telegram_listener = TelegramListener(signal_executor)
@@ -47,6 +45,9 @@ async def lifespan(app: FastAPI):
     log.info("Starting up: Initializing database tables")
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    
+    # Clean up zombie signals
+    await signal_executor.cleanup_on_startup()
     
     # 2. Connect to Deriv
     log.info("Starting up: Connecting to Deriv WebSocket")
@@ -86,7 +87,7 @@ async def lifespan(app: FastAPI):
     async def ping_loop():
         while True:
             try:
-                await asyncio.sleep(30)
+                await asyncio.sleep(20) # Aggressive ping: 20s
                 if deriv_client.connected_event.is_set():
                     await deriv_client.ping()
             except Exception as e:

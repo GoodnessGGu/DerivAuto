@@ -8,6 +8,7 @@ from loguru import logger as log
 from app.deriv.trader import DerivTrader
 from app.signals.executor import SignalExecutor
 from app.core.config_service import ConfigManager
+from app.signals.schemas import SignalInput
 
 class TelegramBot:
     def __init__(self, token: str, trader: DerivTrader, executor: SignalExecutor, config_mgr: ConfigManager):
@@ -510,7 +511,8 @@ class TelegramBot:
         """Notifies admin that a limit order was triggered."""
         if not self.admin_id: return
         msg = (
-            f"🚀 *LIMIT ORDER TRIGGERED*\n\n"
+            f"🚀 *LIMIT ORDER TRIGGERED*\n"
+            f"────────────────────\n"
             f"📈 *Asset:* `{symbol}`\n"
             f"⚡ *Action:* `{action}`\n"
             f"🎯 *Trigger Price:* `{price}`\n\n"
@@ -521,6 +523,27 @@ class TelegramBot:
             await self.app.bot.send_message(chat_id=self.admin_id, text=msg, parse_mode="Markdown")
         except Exception as e:
             log.error(f"Failed to send trigger notification: {e}")
+
+    async def notify_signal_received(self, signal_in: SignalInput):
+        """Sends an alert when a signal is first discovered."""
+        if not self.admin_id: return
+        
+        msg = (
+            "📡 *SIGNAL DISCOVERED*\n"
+            "────────────────────\n"
+            f"📈 *Asset:* `{signal_in.symbol}`\n"
+            f"⚡ *Action:* `{signal_in.action}`\n"
+            f"💰 *Stake:* `${signal_in.stake}`\n"
+            f"🌐 *Source:* `{signal_in.source}`"
+        )
+        
+        if signal_in.entry_price:
+            msg += f"\n🎯 *Target:* `{signal_in.entry_price}`"
+            
+        try:
+            await self.app.bot.send_message(chat_id=self.admin_id, text=msg, parse_mode="Markdown")
+        except Exception as e:
+            log.error(f"Failed to send discovery notification: {e}")
 
     async def close_trade_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Processes the 'Close Trade' button click."""

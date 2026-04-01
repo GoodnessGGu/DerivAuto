@@ -92,8 +92,19 @@ class TelegramListener:
             log.info(f"Found valid signal via Userbot (Source: {detected_source})")
             signal_in.source = detected_source
             
+            # --- REPLY TO SOURCE ---
+            try:
+                await event.reply(f"🚀 *Signal Received:* ` {signal_in.symbol} {signal_in.action} `")
+            except Exception as e:
+                log.warning(f"Could not reply to source channel: {e}")
+            
             # Execute
             result = await self.executor.process_signal(signal_in)
             log.info(f"Userbot Trade Result: {result.get('status')}")
+            
+            # --- OPTIONAL: UPDATE REPLY WITH RESULT ---
+            # if result.get("status") == "executed":
+            #     try: await event.reply(f"✅ Executed: {signal_in.symbol}")
+            #     except: pass
         else:
             log.debug("Userbot message did not match signal format.")

@@ -11,12 +11,22 @@ import asyncio
 from app.core.config_service import ConfigManager
 
 class SignalExecutor:
-    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory, config_mgr: ConfigManager, market_collector=None):
+    def __init__(self, trader: DerivTrader, risk: RiskManager, session_factory, config_mgr: ConfigManager, market_collector=None, tg_bot=None):
         self.trader = trader
         self.risk = risk
         self.session_factory = session_factory
         self.config_mgr = config_mgr
         self.market_collector = market_collector
+        self.tg_bot = tg_bot
+
+    async def cleanup_on_startup(self):
+        """Clears stale pending_limit signals to avoid zombie trades on restart."""
+        async with self.session_factory() as session:
+            from sqlalchemy import delete
+            q = delete(Signal).where(Signal.status == "pending_limit")
+            await session.execute(q)
+            await session.commit()
+            log.info("Startup cleanup: Cleared all stale pending_limit signals.")
 
     async def process_signal(self, signal_in: SignalInput, skip_duplicate_check: bool = False, force_execute: bool = False):
         """The main entry point for a new signal."""
@@ -30,6 +40,10 @@ class SignalExecutor:
              
         log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} | Stake: {signal_in.stake} | Mult: {signal_in.multiplier}")
         
+        # --- ADMIN NOTIFICATION (Discovery) ---
+        if self.tg_bot:
+            asyncio.create_task(self.tg_bot.notify_signal_received(signal_in))
+        
         # --- DYNAMIC SYMBOL SUBSCRIPTION ---
         if self.market_collector:
             await self.market_collector.subscribe_symbol(signal_in.symbol)
@@ -42,7 +56,22 @@ class SignalExecutor:
         # 2. Store signal in DB
         signal_db = await self._save_signal(signal_in)
         
-        # 3. Handle Limit Orders
+        # 3. Proximity Check for Immediate Execution
+        # If the current price is within 2 pips (0.02% to 0.05% depending on asset)
+        # We execute immediately instead of setting a limit.
+        if not force_execute and signal_in.entry_price and self.market_collector:
+            current_price = self.market_collector.get_last_tick(signal_in.symbol)
+            if current_price:
+                # Calculate percentage difference
+                diff_pct = abs(current_price - signal_in.entry_price) / signal_in.entry_price
+                # 0.0005 = 0.05% tolerance (approx 5 pips on EURUSD)
+                if diff_pct <= 0.0005:
+                    log.info(f"Market proximity detected ({diff_pct:.4%}). Force executing signal at market.")
+                    force_execute = True
+                else:
+                    log.debug(f"Signal price far from market ({diff_pct:.4%}). Proceeding with limit order.")
+        
+        # 4. Handle Limit Orders
         if not force_execute and signal_in.entry_price:
             log.info(f"Signal has entry price {signal_in.entry_price}. Saving as pending_limit.")
             await self._update_signal_status(signal_db.id, "pending_limit")
@@ -89,6 +118,14 @@ class SignalExecutor:
             if 'timestamp' in signal_data and signal_data['timestamp']:
                 signal_data['timestamp'] = signal_data['timestamp'].isoformat()
             await self._save_failed_signal(signal_data, result["error"])
+            
+            # Notify Admin on failure
+            if self.tg_bot:
+                 asyncio.create_task(self.tg_bot.app.bot.send_message(
+                     chat_id=self.tg_bot.admin_id,
+                     text=f"❌ *TRADE FAILED*\n\nAsset: `{signal_in.symbol}`\nError: `{result['error']}`",
+                     parse_mode="Markdown"
+                 ))
             return {"status": "failed", "error": result["error"]}
 
     def _map_action(self, action: str) -> str:
