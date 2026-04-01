@@ -6,16 +6,32 @@ from app.models.db_models import ExecutedTrade, Signal
 from datetime import datetime, time
 
 class RiskManager:
-    def __init__(self, session_factory):
+    def __init__(self, session_factory, config_mgr=None):
         self.session_factory = session_factory
+        self.config_mgr = config_mgr
 
     async def validate_trade(self, symbol: str, stake: float) -> (bool, str):
-        """Check if a trade follows risk rules."""
-        # 1. Stake check
-        if stake > settings.MAX_STAKE:
-            return False, f"Stake {stake} exceeds MAX_STAKE {settings.MAX_STAKE}"
+        """Check if a trade follows dynamic risk rules."""
+        # 1. Master Kill-Switch Check
+        if self.config_mgr:
+            cfg = await self.config_mgr.get_config()
+            if not cfg.get("trading_enabled", True):
+                return False, "Trading is currently PAUSED via Master Kill-Switch."
+            
+            # Use dynamic limits if available, fall back to settings
+            max_stake = cfg.get("max_stake", settings.MAX_STAKE)
+            max_trades = cfg.get("max_daily_trades", settings.MAX_DAILY_TRADES)
+            max_loss = cfg.get("max_daily_loss", settings.MAX_DAILY_LOSS)
+        else:
+            max_stake = settings.MAX_STAKE
+            max_trades = settings.MAX_DAILY_TRADES
+            max_loss = settings.MAX_DAILY_LOSS
+
+        # 2. Stake check
+        if stake > max_stake:
+            return False, f"Stake ${stake} exceeds current limit of ${max_stake}"
         
-        # 2. Daily limits check
+        # 3. Daily limits check
         async with self.session_factory() as session:
             today_start = datetime.combine(datetime.utcnow().date(), time.min)
             
@@ -24,8 +40,8 @@ class RiskManager:
             count_result = await session.execute(q_count)
             daily_trades = count_result.scalar() or 0
             
-            if daily_trades >= settings.MAX_DAILY_TRADES:
-                return False, f"Daily trade limit {settings.MAX_DAILY_TRADES} reached"
+            if daily_trades >= max_trades:
+                return False, f"Daily trade limit {max_trades} reached"
             
             # Count today's loss
             q_loss = select(func.sum(ExecutedTrade.profit)).where(
@@ -35,8 +51,8 @@ class RiskManager:
             loss_result = await session.execute(q_loss)
             daily_loss = abs(loss_result.scalar() or 0.0)
             
-            if daily_loss >= settings.MAX_DAILY_LOSS:
-                return False, f"Daily loss limit {settings.MAX_DAILY_LOSS} reached"
+            if daily_loss >= max_loss:
+                return False, f"Daily loss limit ${max_loss} reached"
 
         return True, "Success"
 

@@ -54,6 +54,8 @@ class TelegramBot:
         self.app.add_handler(CallbackQueryHandler(self.refresh_trade_callback, pattern="^refresh_"))
         self.app.add_handler(CallbackQueryHandler(self.adjust_setting_handler, pattern="^set_"))
         self.app.add_handler(CallbackQueryHandler(self.switch_account_handler, pattern="^switch_"))
+        self.app.add_handler(CallbackQueryHandler(self.safety_menu_handler, pattern="^open_safety"))
+        self.app.add_handler(CallbackQueryHandler(self.adjust_safety_handler, pattern="^safe_"))
         
         # Handle private command messages (Manual Signals)
         self.app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), self.message_handler))
@@ -149,6 +151,7 @@ class TelegramBot:
                 InlineKeyboardButton("+10", callback_data="set_mult_10")
             ],
             [InlineKeyboardButton(f"TSL: {tsl}", callback_data="set_tsl_toggle")],
+            [InlineKeyboardButton("🛡️ SAFETY DASHBOARD", callback_data="open_safety")],
             [InlineKeyboardButton("✅ Done", callback_data="set_done")]
         ])
         
@@ -185,9 +188,86 @@ class TelegramBot:
             new_val = not cfg.get("trailing_sl_enabled", False)
             await self.config_mgr.update_setting("trailing_sl_enabled", new_val)
             await query.answer(f"Trailing SL: {'Enabled' if new_val else 'Disabled'}")
+            
+        elif "open_safety" in data:
+            await self.safety_menu_handler(update, context)
+            return
 
         # Refresh the menu
         await self.settings_menu_handler(update, context)
+
+    async def safety_menu_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Displays the safety/risk management menu."""
+        query = update.callback_query
+        cfg = await self.config_mgr.get_config()
+        
+        status = "🟢 ACTIVE" if cfg.get("trading_enabled", True) else "🔴 PAUSED (Kill-Switch)"
+        max_stake = cfg.get("max_stake", 50.0)
+        max_trades = cfg.get("max_daily_trades", 20)
+        max_loss = cfg.get("max_daily_loss", 100.0)
+        
+        msg = (
+            "🛡️ *SAFETY & RISK DASHBOARD*\n\n"
+            f"🔄 *Status:* `{status}`\n"
+            f"💰 *Max Stake:* `${max_stake}`\n"
+            f"🔢 *Daily Trade Limit:* `{max_trades}`\n"
+            f"📉 *Max Daily Loss:* `${max_loss}`\n\n"
+            "Protect your capital by tuning these limits:"
+        )
+        
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton(f"Master Switch: {status}", callback_data="safe_toggle")],
+            [
+                InlineKeyboardButton("-10", callback_data="safe_stake_-10"),
+                InlineKeyboardButton("🛡️ MAX STAKE", callback_data="none"),
+                InlineKeyboardButton("+10", callback_data="safe_stake_10")
+            ],
+            [
+                InlineKeyboardButton("-5", callback_data="safe_trades_-5"),
+                InlineKeyboardButton("🔢 MAX TRADES", callback_data="none"),
+                InlineKeyboardButton("+5", callback_data="safe_trades_5")
+            ],
+            [
+                InlineKeyboardButton("-20", callback_data="safe_loss_-20"),
+                InlineKeyboardButton("📉 MAX LOSS", callback_data="none"),
+                InlineKeyboardButton("+20", callback_data="safe_loss_20")
+            ],
+            [InlineKeyboardButton("🔙 Back to Settings", callback_data="open_settings")]
+        ])
+        
+        await query.edit_message_text(msg, reply_markup=keyboard, parse_mode="Markdown")
+
+    async def adjust_safety_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Callback for safety adjustments."""
+        query = update.callback_query
+        data = query.data
+        cfg = await self.config_mgr.get_config()
+        
+        if data == "open_settings":
+            await self.settings_menu_handler(update, context)
+            return
+
+        if "toggle" in data:
+            new_val = not cfg.get("trading_enabled", True)
+            await self.config_mgr.update_setting("trading_enabled", new_val)
+            await query.answer(f"Bot {'RESUMED' if new_val else 'PAUSED'}")
+        
+        elif "stake" in data:
+            change = float(data.split("_")[-1])
+            new_val = max(5.0, cfg.get("max_stake", 50.0) + change)
+            await self.config_mgr.update_setting("max_stake", new_val)
+            
+        elif "trades" in data:
+            change = int(data.split("_")[-1])
+            new_val = max(1, cfg.get("max_daily_trades", 20) + change)
+            await self.config_mgr.update_setting("max_daily_trades", new_val)
+            
+        elif "loss" in data:
+            change = float(data.split("_")[-1])
+            new_val = max(10.0, cfg.get("max_daily_loss", 100.0) + change)
+            await self.config_mgr.update_setting("max_daily_loss", new_val)
+
+        await self.safety_menu_handler(update, context)
 
     async def switch_account_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handles the account switch request."""

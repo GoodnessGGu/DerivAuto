@@ -160,9 +160,22 @@ class DerivClient:
             await self.subscribe_ticks(symbol)
 
     async def ping(self):
-        """Send a ping to keep connection alive."""
-        if self.ws and self.ws.state.name != "CLOSED":
-            await self.ws.send(json.dumps({"ping": 1}))
+        """Performs a diagnostic heartbeat by requesting server time."""
+        if not self.ws or self.ws.state.name != "OPEN":
+            self.connected_event.clear()
+            return
+
+        try:
+            # A functional request (time) is more reliable than a simple ping
+            # because it verifies the API is actually processing messages.
+            await self.send_request({"time": 1})
+            log.debug("Heartbeat: API Responsive.")
+        except Exception as e:
+            log.warning(f"Heartbeat: API Unresponsive ({e}). Triggering Reconnect...")
+            self.connected_event.clear()
+            if self.ws:
+                await self.ws.close()
+            # The _listen task or main loop will trigger connect()
 
     async def buy(self, proposal_id: str, price: float):
         """Buy a contract based on a proposal."""

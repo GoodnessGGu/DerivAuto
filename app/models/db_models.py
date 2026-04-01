@@ -101,4 +101,11 @@ class DynamicConfig(Base):
     active_multiplier = Column(Integer, default=100)
     trailing_sl_enabled = Column(Boolean, default=False)
     active_account_type = Column(String, default="real") # "demo" or "real"
+    
+    # 🛡️ Pro-Safety Fields
+    trading_enabled = Column(Boolean, default=True) # The Kill-Switch
+    max_stake = Column(Float, default=100.0)
+    max_daily_trades = Column(Integer, default=50)
+    max_daily_loss = Column(Float, default=200.0)
+    
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

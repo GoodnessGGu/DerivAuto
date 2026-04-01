@@ -11,7 +11,11 @@ class ConfigManager:
             "active_stake": 5.0,
             "active_multiplier": 100,
             "trailing_sl_enabled": False,
-            "active_account_type": "real"
+            "active_account_type": "real",
+            "trading_enabled": True,
+            "max_stake": 50.0,
+            "max_daily_trades": 20,
+            "max_daily_loss": 100.0
         }
         self._initialized = False
 
@@ -55,7 +59,11 @@ class ConfigManager:
                         "active_stake": config.active_stake,
                         "active_multiplier": config.active_multiplier,
                         "trailing_sl_enabled": config.trailing_sl_enabled,
-                        "active_account_type": config.active_account_type
+                        "active_account_type": config.active_account_type,
+                        "trading_enabled": config.trading_enabled,
+                        "max_stake": config.max_stake,
+                        "max_daily_trades": config.max_daily_trades,
+                        "max_daily_loss": config.max_daily_loss
                     }
                 else:
                     # Seed initial config if missing
