@@ -19,6 +19,7 @@ class DerivClient:
         self._request_futures: Dict[str, asyncio.Future] = {}
         self._reconnect_delay = 1
         self._running = False
+        self._req_id_counter = 0 # Unique request counter
         self.connected_event = asyncio.Event()
 
     async def connect(self):
@@ -107,9 +108,14 @@ class DerivClient:
         finally:
             self.is_authorized = False
             self.connected_event.clear()
-            self._running = False
+            
+            # If the client was supposed to be running, trigger a reconnect
             if self._running:
+                log.info("WebSocket listener exited. Triggering reconnection...")
+                self._running = False # Reset state
                 asyncio.create_task(self.connect())
+            else:
+                self._running = False
 
     async def send_request(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """Send a request and wait for response using req_id. Waits for connection if down."""
@@ -125,7 +131,8 @@ class DerivClient:
             self.connected_event.clear()
             raise Exception("WebSocket not connected")
         
-        req_id = str(int(time.time() * 1000))
+        self._req_id_counter += 1
+        req_id = f"{int(time.time())}_{self._req_id_counter}"
         payload["req_id"] = req_id
         
         future = asyncio.get_event_loop().create_future()

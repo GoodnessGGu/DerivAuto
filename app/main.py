@@ -64,14 +64,18 @@ async def lifespan(app: FastAPI):
     except asyncio.TimeoutError:
         log.error("Failed to connect to Deriv within timeout. Startup continuing, but signal processing may be delayed.")
 
-    # 3. Start Market Data Collection
+    # 3. Start Market Data Storage (Buffering)
+    log.info("Starting up: Initializing Market Data Storage")
+    await market_storage.start()
+
+    # 4. Start Market Data Collection
     log.info("Starting up: Initializing Market Data Collector")
     try:
         await market_collector.start()
     except Exception as e:
         log.error(f"Market Data Collector failed to start: {e}")
 
-    # 4. Start Limit Order Manager
+    # 5. Start Limit Order Manager
     log.info("Starting up: Initializing Limit Order Manager")
     await limit_manager.start()
 
@@ -106,6 +110,7 @@ async def lifespan(app: FastAPI):
     await trade_monitor.stop()
     await limit_manager.stop()
     await market_collector.stop()
+    await market_storage.stop()
     if telegram_bot:
         await telegram_bot.stop()
     await telegram_listener.stop()
