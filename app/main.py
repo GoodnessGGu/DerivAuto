@@ -94,12 +94,14 @@ async def lifespan(app: FastAPI):
     async def ping_loop():
         while True:
             try:
-                await asyncio.sleep(20) # Aggressive ping: 20s
-                if deriv_client.connected_event.is_set():
+                await asyncio.sleep(20) # Heartbeat every 20s
+                if not deriv_client.connected_event.is_set():
+                    log.warning("Deriv connection identified as DOWN. Attempting reconnection...")
+                    await deriv_client.connect()
+                else:
                     await deriv_client.ping()
             except Exception as e:
-                log.warning(f"Ping failed: {e}. Re-verifying connection...")
-                # The client._listen task will handle reconnection, we just catch the error here
+                log.error(f"Ping loop error: {e}")
     
     asyncio.create_task(ping_loop())
     

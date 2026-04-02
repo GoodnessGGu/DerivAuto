@@ -21,48 +21,89 @@ class DerivClient:
         self._running = False
         self._req_id_counter = 0 # Unique request counter
         self.connected_event = asyncio.Event()
+        self._connect_lock = asyncio.Lock()
+        self._listen_task: Optional[asyncio.Task] = None
 
     async def connect(self):
-        """Establish WebSocket connection and authorize."""
-        while True:
-            try:
-                log.info(f"Connecting to Deriv WebSocket: {self.uri}")
-                ssl_context = ssl.create_default_context()
-                self.ws = await websockets.connect(self.uri, ssl=ssl_context)
-                self._running = True
-                self.connected_event.set() # Allow send_request to proceed for authorization
-                
-                # Start listener background task
-                asyncio.create_task(self._listen())
-                
-                authorized = await self.authorize()
-                if authorized:
-                    log.info("Deriv Authorization Successful")
-                    self.is_authorized = True
-                    self._reconnect_delay = 1
-                    # Resubscribe to previous symbols if any
-                    await self._resubscribe()
-                    return True
-                else:
-                    log.error("Deriv Authorization Failed")
+        """Establish WebSocket connection and authorize. Thread-safe."""
+        async with self._connect_lock:
+            # If already connected and authorized, just return
+            if self.ws and self.ws.state.name == "OPEN" and self.is_authorized:
+                return True
+
+            while self._running or not self.ws:
+                try:
+                    # Cleanup old task if exists
+                    if self._listen_task and not self._listen_task.done():
+                        self._listen_task.cancel()
+                        try:
+                            await self._listen_task
+                        except asyncio.CancelledError:
+                            pass
+                    
+                    if self.ws:
+                        await self.ws.close()
+                    
+                    log.info(f"Connecting to Deriv WebSocket: {self.uri}")
+                    ssl_context = ssl.create_default_context()
+                    self.ws = await websockets.connect(self.uri, ssl=ssl_context)
+                    
+                    # Start listener and track it
+                    self._listen_task = asyncio.create_task(self._listen())
+                    
+                    authorized = await self.authorize()
+                    if authorized:
+                        log.info("Deriv Authorization Successful")
+                        self.is_authorized = True
+                        self.connected_event.set()
+                        self._reconnect_delay = 1
+                        self._running = True
+                        # Resubscribe to previous symbols if any
+                        await self._resubscribe()
+                        return True
+                    else:
+                        log.error("Deriv Authorization Failed. Retrying...")
+                        self.connected_event.clear()
+                        await self.ws.close()
+                        self.ws = None
+                        await asyncio.sleep(self._reconnect_delay)
+                        self._reconnect_delay = min(self._reconnect_delay * 2, 60)
+                except Exception as e:
+                    log.error(f"Connection error: {e}. Retrying in {self._reconnect_delay}s...")
                     self.connected_event.clear()
-                    await self.ws.close()
-            except Exception as e:
-                log.error(f"Connection error: {e}. Retrying in {self._reconnect_delay}s...")
-                await asyncio.sleep(self._reconnect_delay)
-                self._reconnect_delay = min(self._reconnect_delay * 2, 60)
+                    await asyncio.sleep(self._reconnect_delay)
+                    self._reconnect_delay = min(self._reconnect_delay * 2, 60)
 
     async def authorize(self, token: Optional[str] = None) -> bool:
         """Send authorize request."""
         target_token = token or self.token
         log.info(f"Authorizing client with token: {target_token[:4]}...{target_token[-4:]}")
-        response = await self.send_request({"authorize": target_token})
         
-        if "authorize" in response:
-            self.token = target_token
-            self.is_authorized = True
-            return True
-        return False
+        try:
+            # Need a temporary bypass for connected_event since it's cleared before authorize
+            # but send_request waits for it. We'll set it briefly.
+            self.connected_event.set()
+            response = await self.send_request({"authorize": target_token})
+            
+            if "authorize" in response:
+                self.token = target_token
+                self.is_authorized = True
+                return True
+            
+            if "error" in response:
+                err_msg = response["error"].get("message", "Unknown error")
+                log.error(f"Authorization Error: {err_msg}")
+                if "rate limit" in err_msg.lower():
+                    log.warning("Rate limit hit. Cooling down for 60s...")
+                    self._reconnect_delay = 60
+            
+            return False
+        except Exception as e:
+            log.error(f"Authorization exception: {e}")
+            return False
+        finally:
+            if not self.is_authorized:
+                self.connected_event.clear()
 
     async def switch_account(self, new_token: str):
         """Switches the active account by re-authorizing with a new token."""
@@ -99,7 +140,10 @@ class DerivClient:
                 
                 # Handle errors
                 if "error" in data:
-                    log.error(f"API Error: {data['error'].get('message')}")
+                    err_msg = data['error'].get('message', "Unknown error")
+                    log.error(f"API Error: {err_msg}")
+                    if "rate limit" in err_msg.lower():
+                        log.warning("Rate limit hit detected in listener.")
 
         except websockets.ConnectionClosed:
             log.warning("WebSocket connection closed")
@@ -108,14 +152,8 @@ class DerivClient:
         finally:
             self.is_authorized = False
             self.connected_event.clear()
-            
-            # If the client was supposed to be running, trigger a reconnect
-            if self._running:
-                log.info("WebSocket listener exited. Triggering reconnection...")
-                self._running = False # Reset state
-                asyncio.create_task(self.connect())
-            else:
-                self._running = False
+            # We don't trigger connect() here anymore. 
+            # The main loop or a heartbeat will trigger it.
 
     async def send_request(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """Send a request and wait for response using req_id. Waits for connection if down."""
