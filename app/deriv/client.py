@@ -19,7 +19,7 @@ class DerivClient:
         self._request_futures: Dict[str, asyncio.Future] = {}
         self._reconnect_delay = 1
         self._running = False
-        self._req_id_counter = 0 # Unique request counter
+        self._req_id_counter = int(time.time()) # Unique starting integer
         self.connected_event = asyncio.Event()
         self._connect_lock = asyncio.Lock()
         self._listen_task: Optional[asyncio.Task] = None
@@ -170,11 +170,11 @@ class DerivClient:
             raise Exception("WebSocket not connected")
         
         self._req_id_counter += 1
-        req_id = f"{int(time.time())}_{self._req_id_counter}"
+        req_id = self._req_id_counter
         payload["req_id"] = req_id
         
         future = asyncio.get_event_loop().create_future()
-        self._request_futures[req_id] = future
+        self._request_futures[str(req_id)] = future
         
         await self.ws.send(json.dumps(payload))
         
