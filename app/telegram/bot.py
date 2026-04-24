@@ -124,7 +124,8 @@ class TelegramBot:
         user = update.effective_user
         if user.id != self.admin_id: return
 
-        await update.message.reply_chat_action("typing")
+        if update.message:
+            await update.message.reply_chat_action("typing")
         cfg = await self.config_mgr.get_config()
         
         stake = cfg.get("active_stake", 5.0)
