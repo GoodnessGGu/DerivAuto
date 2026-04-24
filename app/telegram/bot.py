@@ -358,13 +358,13 @@ class TelegramBot:
             if not details: continue
             
             # Fetch db record for TP label
-            from app.db.session import async_session
+            from app.core.database import async_session_factory
             from sqlalchemy import select
             from sqlalchemy.orm import selectinload
             from app.models.db_models import ExecutedTrade
             
             tp_label = "TP"
-            async with async_session() as session:
+            async with async_session_factory() as session:
                 stmt = select(ExecutedTrade).options(selectinload(ExecutedTrade.signal)).where(ExecutedTrade.contract_id == str(contract_id))
                 result = await session.execute(stmt)
                 trade = result.scalar_one_or_none()
