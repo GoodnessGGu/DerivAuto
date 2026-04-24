@@ -69,21 +69,23 @@ class TelegramListener:
         
         log.info(f"Userbot detected message from {getattr(chat, 'title', chat.id)}: {text[:50]}...")
         
+        chat_title = getattr(chat, 'title', str(chat_id))
+        detected_source = chat_title
+        
         # Source Detection Logic
-        detected_source = "telegram_channel"
         if str(chat_id) == str(settings.TELEGRAM_CHANNEL_ALBURQUERQUE):
             if "TFXC" in text.upper():
-                detected_source = "TFXC (via Test)"
+                detected_source = f"{chat_title} (TFXC Test)"
             elif any(k in text.upper() for k in ["GOLD PIPS", "HUNTER"]):
-                detected_source = "Gold Pips (via Test)"
+                detected_source = f"{chat_title} (Gold Pips Test)"
             else:
-                detected_source = "Alburquerque Test"
+                detected_source = f"{chat_title} (Alburquerque Test)"
         else:
             # Direct channel
             if str(chat_id) == str(settings.TELEGRAM_CHANNEL_TFXC):
-                detected_source = "TFXC Official"
+                detected_source = f"{chat_title} (TFXC Official)"
             elif str(chat_id) == str(settings.TELEGRAM_CHANNEL_GOLD_PIPS):
-                detected_source = "Gold Pips Official"
+                detected_source = f"{chat_title} (Gold Pips Official)"
 
         # Pass to the standard parser
         signal_in = parse_signal(text)
@@ -95,7 +97,7 @@ class TelegramListener:
             # --- REPLY TO SOURCE ---
             status_msg = None
             try:
-                status_msg = await event.reply(f"🚀 *Signal Received:* ` {signal_in.symbol} {signal_in.action} `\nstatus: ` Processing... `")
+                status_msg = await event.reply(f"🚀 *Signal Received from {chat_title}:* ` {signal_in.symbol} {signal_in.action} `\nstatus: ` Processing... `")
             except Exception as e:
                 log.warning(f"Could not reply to source channel: {e}")
             
