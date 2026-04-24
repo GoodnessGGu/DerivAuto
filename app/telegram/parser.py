@@ -68,37 +68,32 @@ def parse_signal(text: str) -> SignalInput or None:
         tp3_match = re.search(r"TP3:?\s*([\d\.]+)", text_clean)
         sl_match = re.search(r"SL:?\s*([\d\.]+)", text_clean)
         
-        # Calculate Average TP if TP2 and TP3 exist
-        tp_val = None
-        if tp2_match and tp3_match:
-            try:
-                tp2 = float(tp2_match.group(1))
-                tp3 = float(tp3_match.group(1))
-                tp_val = round((tp2 + tp3) / 2, 2)
-                log.info(f"Using Average TP Strategy: (TP2:{tp2} + TP3:{tp3}) / 2 = {tp_val}")
-            except: pass
-        
-        # Fallback to TP1 if average not possible
-        if tp_val is None and tp1_match:
-            try: tp_val = float(tp1_match.group(1))
-            except: pass
+        # We no longer average TPs. We extract them exactly as they are.
+        # The executor will select the requested TP level based on settings.
             
         sl_val = None
         if sl_match:
             try: sl_val = float(sl_match.group(1))
             except: pass
             
+        # Determine if it's a market or limit order
+        # Limit keywords usually include LIMIT, PENDING, STOP, etc.
+        order_type = "limit" if any(k in text_clean for k in ["LIMIT", "PENDING", "STOP"]) else "market"
+            
         return SignalInput(
             symbol=symbol,
             action=action,
             stake=10.0, # Default stake
-            take_profit=tp_val,
+            take_profit=None, # Executor will set this based on config
             stop_loss=sl_val,
             entry_price=entry_price,
             source="telegram_channel",
-            metadata={"tp1": tp1_match.group(1) if tp1_match else None, 
-                      "tp2": tp2_match.group(1) if tp2_match else None,
-                      "tp3": tp3_match.group(1) if tp3_match else None}
+            metadata={
+                "order_type": order_type,
+                "tp1": float(tp1_match.group(1)) if tp1_match else None, 
+                "tp2": float(tp2_match.group(1)) if tp2_match else None,
+                "tp3": float(tp3_match.group(1)) if tp3_match else None
+            }
         )
     except Exception as e:
         log.error(f"Failed to parse signal: {e}")

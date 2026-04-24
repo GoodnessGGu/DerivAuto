@@ -15,7 +15,8 @@ class ConfigManager:
             "trading_enabled": True,
             "max_stake": 50.0,
             "max_daily_trades": 20,
-            "max_daily_loss": 100.0
+            "max_daily_loss": 100.0,
+            "target_tp_level": 1
         }
         self._initialized = False
 
@@ -63,7 +64,8 @@ class ConfigManager:
                         "trading_enabled": config.trading_enabled,
                         "max_stake": config.max_stake,
                         "max_daily_trades": config.max_daily_trades,
-                        "max_daily_loss": config.max_daily_loss
+                        "max_daily_loss": config.max_daily_loss,
+                        "target_tp_level": config.target_tp_level
                     }
                 else:
                     # Seed initial config if missing

@@ -40,6 +40,24 @@ class SignalExecutor:
              
         log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} | Stake: {signal_in.stake} | Mult: {signal_in.multiplier}")
         
+        # --- DYNAMIC TP SELECTION ---
+        target_tp_level = cfg.get("target_tp_level", 1)
+        if signal_in.metadata:
+            # Try requested TP, fallback if missing
+            requested_tp = signal_in.metadata.get(f"tp{target_tp_level}")
+            tp_label = f"TP{target_tp_level}"
+            if not requested_tp:
+                for i in range(1, 4):
+                    if signal_in.metadata.get(f"tp{i}"):
+                        requested_tp = signal_in.metadata.get(f"tp{i}")
+                        tp_label = f"TP{i}"
+                        break
+            
+            if requested_tp:
+                signal_in.take_profit = requested_tp
+                signal_in.metadata["target_tp_label"] = tp_label
+                log.info(f"Targeting {tp_label} @ {requested_tp}")
+
         # --- ADMIN NOTIFICATION (Discovery) ---
         if self.tg_bot:
             asyncio.create_task(self.tg_bot.notify_signal_received(signal_in))
@@ -56,7 +74,13 @@ class SignalExecutor:
         # 2. Store signal in DB
         signal_db = await self._save_signal(signal_in)
         
-        # 3. Proximity Check for Immediate Execution
+        # 3. Handle Order Types & Proximity
+        # If it's a 'market' order type (like "BUY NOW"), or no entry_price, force execute instantly.
+        order_type = signal_in.metadata.get("order_type", "market") if signal_in.metadata else "market"
+        if order_type == "market":
+            force_execute = True
+            log.info("Order type is market. Forcing immediate execution.")
+            
         # If the current price is within 2 pips (0.02% to 0.05% depending on asset)
         # We execute immediately instead of setting a limit.
         if not force_execute and signal_in.entry_price and self.market_collector:
@@ -109,6 +133,15 @@ class SignalExecutor:
             log.info(f"Trade executed SUCCESS: {result['contract_id']}")
             await self._update_signal_status(signal_db.id, "executed")
             await self._save_executed_trade(signal_db.id, signal_in.symbol, result)
+            
+            # Post-trade: Update limits to be exactly accurate to the signal price level
+            if signal_in.take_profit or signal_in.stop_loss:
+                asyncio.create_task(self.trader.update_contract_limits_exact(
+                    contract_id=result["contract_id"],
+                    take_profit_price=signal_in.take_profit,
+                    stop_loss_price=signal_in.stop_loss
+                ))
+            
             return {"status": "executed", "contract_id": result["contract_id"]}
         else:
             log.error(f"Trade execution FAILED: {result['error']}")

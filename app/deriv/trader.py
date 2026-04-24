@@ -129,8 +129,61 @@ class DerivTrader:
             "price": 0  # 0 means market price
         })
 
+    def calculate_limit_amount(self, price_level: float, spot: float, amount: float, multiplier: int, contract_type: str, field: str) -> float:
+        """Calculates the exact dollar amount for a Deriv limit order given a price level and entry spot."""
+        price_diff = abs(price_level - spot)
+        calc_amount = round(float(amount) * float(multiplier) * (price_diff / spot), 2)
+        
+        final_amount = max(calc_amount, 1.00)
+        if field == "stop_loss" and contract_type in ["MULTUP", "MULTDOWN"]:
+            final_amount = min(final_amount, float(amount) * 0.95)
+            
+        return round(final_amount, 2)
+
+    async def update_contract_limits_exact(self, contract_id: int, take_profit_price: Optional[float] = None, stop_loss_price: Optional[float] = None):
+        """Updates limits by converting absolute price levels to exact dollar amounts based on the actual entry tick."""
+        # 1. Fetch exact entry tick and details
+        details = await self.check_contract_status(contract_id)
+        if not details:
+            log.error(f"Cannot update exact limits for {contract_id}: status not found.")
+            return False
+            
+        entry_tick = float(details.get("entry_tick", details.get("current_spot", 0)))
+        amount = float(details.get("buy_price", 0))
+        multiplier = int(details.get("multiplier", 100))
+        contract_type = details.get("contract_type")
+        
+        if not entry_tick or not amount:
+            log.error(f"Cannot update exact limits for {contract_id}: missing entry_tick or amount.")
+            return False
+            
+        payload = {
+            "contract_update": 1,
+            "contract_id": contract_id,
+            "limit_order": {}
+        }
+        
+        if take_profit_price is not None:
+            tp_amount = self.calculate_limit_amount(take_profit_price, entry_tick, amount, multiplier, contract_type, "take_profit")
+            payload["limit_order"]["take_profit"] = tp_amount
+            log.info(f"Exact TP for {contract_id}: Price={take_profit_price}, Entry={entry_tick} -> Amount=${tp_amount}")
+            
+        if stop_loss_price is not None:
+            sl_amount = self.calculate_limit_amount(stop_loss_price, entry_tick, amount, multiplier, contract_type, "stop_loss")
+            payload["limit_order"]["stop_loss"] = sl_amount
+            log.info(f"Exact SL for {contract_id}: Price={stop_loss_price}, Entry={entry_tick} -> Amount=${sl_amount}")
+            
+        if not payload["limit_order"]:
+            return True
+            
+        res = await self.client.send_request(payload)
+        if "error" in res:
+            log.error(f"Failed to update exact limits: {res['error']}")
+            return False
+        return True
+
     async def update_contract_limits(self, contract_id: int, take_profit: Optional[float] = None, stop_loss: Optional[float] = None):
-        """Updates the SL/TP limits for an open contract."""
+        """Updates the SL/TP limits for an open contract using raw amounts."""
         payload = {
             "contract_update": 1,
             "contract_id": contract_id,

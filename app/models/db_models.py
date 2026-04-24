@@ -107,5 +107,6 @@ class DynamicConfig(Base):
     max_stake = Column(Float, default=100.0)
     max_daily_trades = Column(Integer, default=50)
     max_daily_loss = Column(Float, default=200.0)
+    target_tp_level = Column(Integer, default=1)
     
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

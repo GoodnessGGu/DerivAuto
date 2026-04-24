@@ -130,12 +130,14 @@ class TelegramBot:
         stake = cfg.get("active_stake", 5.0)
         mult = cfg.get("active_multiplier", 100)
         tsl = "🟢 ON" if cfg.get("trailing_sl_enabled") else "🔴 OFF"
+        current_tp = cfg.get("target_tp_level", 1)
         
         msg = (
             "⚙️ *TRADING SETTINGS*\n\n"
             f"💰 *Default Stake:* `${stake}`\n"
             f"✖️ *Multiplier:* `x{mult}`\n"
-            f"📈 *Trailing Stop-Loss:* `{tsl}`\n\n"
+            f"📈 *Trailing Stop-Loss:* `{tsl}`\n"
+            f"🎯 *Target TP Level:* `TP{current_tp}`\n\n"
             "Use the buttons below to tune your risk:"
         )
         
@@ -152,6 +154,7 @@ class TelegramBot:
             ],
             [InlineKeyboardButton(f"TSL: {tsl}", callback_data="set_tsl_toggle")],
             [InlineKeyboardButton("🛡️ SAFETY DASHBOARD", callback_data="open_safety")],
+            [InlineKeyboardButton(f"🎯 Target: TP{current_tp}", callback_data="set_toggle_tp_level")],
             [InlineKeyboardButton("✅ Done", callback_data="set_done")]
         ])
         
@@ -188,6 +191,12 @@ class TelegramBot:
             new_val = not cfg.get("trailing_sl_enabled", False)
             await self.config_mgr.update_setting("trailing_sl_enabled", new_val)
             await query.answer(f"Trailing SL: {'Enabled' if new_val else 'Disabled'}")
+            
+        elif "toggle_tp_level" in data:
+            current_tp = cfg.get("target_tp_level", 1)
+            new_tp = current_tp + 1 if current_tp < 3 else 1
+            await self.config_mgr.update_setting("target_tp_level", new_tp)
+            await query.answer(f"Target TP Level set to TP{new_tp}")
             
         elif "open_safety" in data:
             await self.safety_menu_handler(update, context)
@@ -347,12 +356,26 @@ class TelegramBot:
             details = await self.trader.check_contract_status(contract_id)
             if not details: continue
             
-            text, keyboard = self._format_trade_status(details)
+            # Fetch db record for TP label
+            from app.db.session import async_session
+            from sqlalchemy import select
+            from sqlalchemy.orm import selectinload
+            from app.models.db_models import ExecutedTrade
+            
+            tp_label = "TP"
+            async with async_session() as session:
+                stmt = select(ExecutedTrade).options(selectinload(ExecutedTrade.signal)).where(ExecutedTrade.contract_id == str(contract_id))
+                result = await session.execute(stmt)
+                trade = result.scalar_one_or_none()
+                if trade and trade.signal and trade.signal.metadata and "target_tp_label" in trade.signal.metadata:
+                    tp_label = trade.signal.metadata["target_tp_label"]
+            
+            text, keyboard = self._format_trade_status(details, tp_label)
             await update.message.reply_text(text, reply_markup=keyboard, parse_mode="Markdown")
         
         return
 
-    def _format_trade_status(self, details: dict):
+    def _format_trade_status(self, details: dict, tp_label: str = "TP"):
         """Standardized formatter for an active trade status message."""
         import time
         from datetime import datetime
@@ -387,7 +410,7 @@ class TelegramBot:
             f"────────────────────\n"
             f"💰 *Entry:* `${entry_price:.5f}` | 💵 *Stake:* `${buy_price}`\n"
             f"{pnl_emoji} *PnL:* `${current_profit:.2f}` (*{pnl_pct:+.1f}%*)\n"
-            f"🎯 *Target:* `{target_info}`\n"
+            f"🎯 *Target ({tp_label}):* `{target_info}`\n"
             f"⏱️ *Active:* `{duration_str}` | 🆔 `{contract_id}`"
         )
         
@@ -413,7 +436,15 @@ class TelegramBot:
             await query.edit_message_text("✅ *Trade has closed.*", parse_mode="Markdown")
             return
 
-        text, keyboard = self._format_trade_status(details)
+        # Try to extract current target label from the text we are updating
+        current_text = query.message.text
+        tp_label = "TP"
+        import re
+        match = re.search(r"Target \((TP\d+)\):", current_text)
+        if match:
+            tp_label = match.group(1)
+
+        text, keyboard = self._format_trade_status(details, tp_label)
         
         try:
             # Only edit if content actually changed to avoid flicker/errors
