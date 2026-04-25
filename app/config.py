@@ -39,6 +39,7 @@ class Settings(BaseSettings):
     TELEGRAM_CHANNEL_TFXC: Optional[str] = None
     TELEGRAM_CHANNEL_GOLD_PIPS: Optional[str] = None
     TELEGRAM_CHANNEL_ALBURQUERQUE: Optional[str] = None
+    TELEGRAM_CHANNEL_SYNTHETIC: Optional[str] = "-1001761389530"
     TELEGRAM_STRING_SESSION: Optional[str] = None
     TELEGRAM_API_ID: Optional[str] = None
     TELEGRAM_API_HASH: Optional[str] = None

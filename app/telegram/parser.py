@@ -8,7 +8,12 @@ def parse_signal(text: str) -> SignalInput or None:
     - TFXC SIGNALS UK (e.g. SELL XAUUSD 4455.7 TP1: 4453.7 SL: 4470.7)
     - Gold Pips Hunter (e.g. Gold Buy Now @ 4430 TP1: 4433 SL: 4421)
     """
-    text_clean = text.upper().replace("🔴", "").replace("🤑", "").replace("🟢", "").strip()
+    # --- EMOJI & SPECIAL CHARACTER CLEANING ---
+    # Convert to upper and strip everything that isn't a letter, number, or standard punctuation
+    # This effectively makes the bot "Emoji-Proof"
+    text_clean = re.sub(r'[^\x00-\x7F]+', ' ', text).upper().strip()
+    # Replace multiple spaces with single space
+    text_clean = re.sub(r'\s+', ' ', text_clean)
     
     # 1. Determine Action (MULTUP/MULTDOWN for Margin Style)
     if any(keyword in text_clean for keyword in ["BUY", "LONG"]):
@@ -31,13 +36,16 @@ def parse_signal(text: str) -> SignalInput or None:
         # Prioritize Volatility and specialized indices
         if "VOLATILITY" in text_clean:
             # Check for (1S) variant first (e.g. Volatility 25 (1s) Index)
-            v1s_match = re.search(r"VOLATILITY\s*(\d+)\s*\(1S\)", text_clean)
+            v1s_match = re.search(r"VOLATILITY\s*(\d+)\s*\(?1S\)?", text_clean)
             if v1s_match:
                 symbol = f"1HZ{v1s_match.group(1)}V"
             else:
                 v_match = re.search(r"VOLATILITY\s*(\d+)", text_clean)
                 if v_match:
                     symbol = f"R_{v_match.group(1)}"
+        
+        elif "STEP" in text_clean:
+            symbol = "STPRNG"
         
         if not symbol:
             # Look for 6-letter currency pairs (e.g. EURUSD) or slashed pairs (EUR/USD)

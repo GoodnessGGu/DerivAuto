@@ -16,7 +16,8 @@ class TelegramListener:
         self.channel_ids = [
             settings.TELEGRAM_CHANNEL_TFXC,
             settings.TELEGRAM_CHANNEL_GOLD_PIPS,
-            settings.TELEGRAM_CHANNEL_ALBURQUERQUE
+            settings.TELEGRAM_CHANNEL_ALBURQUERQUE,
+            settings.TELEGRAM_CHANNEL_SYNTHETIC
         ]
         # Filter out None values and clean numeric strings
         self.channel_ids = [int(cid) for cid in self.channel_ids if cid and str(cid).replace('-', '').isdigit()]
