@@ -21,11 +21,15 @@ class TelegramBot:
         # Channel Toggles: Enabled by default
         self.channel_states = {
             os.getenv("TELEGRAM_CHANNEL_TFXC"): True,
-            os.getenv("TELEGRAM_CHANNEL_GOLD_PIPS"): True
+            os.getenv("TELEGRAM_CHANNEL_GOLD_PIPS"): True,
+            os.getenv("TELEGRAM_CHANNEL_DERIV_SYNTHETIC"): True,
+            os.getenv("TELEGRAM_CHANNEL_G_SOCIETY"): True
         }
         self.channel_names = {
             os.getenv("TELEGRAM_CHANNEL_TFXC"): "TFXC SIGNALS UK",
-            os.getenv("TELEGRAM_CHANNEL_GOLD_PIPS"): "Gold Pips Hunter"
+            os.getenv("TELEGRAM_CHANNEL_GOLD_PIPS"): "Gold Pips Hunter",
+            os.getenv("TELEGRAM_CHANNEL_DERIV_SYNTHETIC"): "DERIV_SYNTHETIC SIGNALS 🔥🔥",
+            os.getenv("TELEGRAM_CHANNEL_G_SOCIETY"): "G Society"
         }
         # Use custom request object with increased timeouts (30s)
         self.request = HTTPXRequest(connect_timeout=30.0, read_timeout=30.0)

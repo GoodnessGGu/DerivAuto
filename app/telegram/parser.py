@@ -28,20 +28,24 @@ def parse_signal(text: str) -> SignalInput or None:
     else:
         # Look for 6-letter currency pairs (e.g. EURUSD) or slashed pairs (EUR/USD)
         # We also look for indices like R_100 or 1HZ100V
-        matches = re.finditer(r"([A-Z]{3}/?[A-Z]{3}|[A-Z]{1,2}_\d+|1HZ\d+V|VOLATILITY\s*\d+)", text_clean)
-        for m in matches:
-            found = m.group(1).replace("/", "").replace(" ", "")
-            # Skip if it's in the blacklist
-            if found in BLACKLIST:
-                continue
-            
-            # Map index names if needed (e.g. VOLATILITY100 -> R_100)
-            if "VOLATILITY" in found:
-                digits = re.search(r"\d+", found).group()
-                found = f"R_{digits}"
-            
-            symbol = found
-            break
+        # Prioritize Volatility and specialized indices
+        if "VOLATILITY" in text_clean:
+            v_match = re.search(r"VOLATILITY\s*(\d+)", text_clean)
+            if v_match:
+                symbol = f"R_{v_match.group(1)}"
+        
+        if not symbol:
+            # Look for 6-letter currency pairs (e.g. EURUSD) or slashed pairs (EUR/USD)
+            # We also look for indices like R_100 or 1HZ100V
+            matches = re.finditer(r"([A-Z]{3}/?[A-Z]{3}|[A-Z]{1,2}_\d+|1HZ\d+V)", text_clean)
+            for m in matches:
+                found = m.group(1).replace("/", "").replace(" ", "")
+                # Skip if it's in the blacklist
+                if found in BLACKLIST:
+                    continue
+                
+                symbol = found
+                break
 
     # If no symbol found, default to Gold if appropriate or return None
     if not symbol:
@@ -62,10 +66,39 @@ def parse_signal(text: str) -> SignalInput or None:
 
     # 4. Extract TP/SL (Advanced Strategy)
     try:
-        # TP Matches
+        # Extract TPs
+        tp1_val = tp2_val = tp3_val = None
+        
+        # Support for "TP1: 4453.7" format
         tp1_match = re.search(r"TP1:?\s*([\d\.]+)", text_clean)
         tp2_match = re.search(r"TP2:?\s*([\d\.]+)", text_clean)
         tp3_match = re.search(r"TP3:?\s*([\d\.]+)", text_clean)
+        
+        if tp1_match:
+            try: tp1_val = float(tp1_match.group(1))
+            except: pass
+        if tp2_match:
+            try: tp2_val = float(tp2_match.group(1))
+            except: pass
+        if tp3_match:
+            try: tp3_val = float(tp3_match.group(1))
+            except: pass
+
+        # Support for "TP 4724 / 4703" or "TP 34157" format
+        if not tp1_val:
+            tp_match = re.search(r"TP:?\s*([\d\.\s/]+)", text_clean)
+            if tp_match:
+                tps = re.findall(r"[\d\.]+", tp_match.group(1))
+                if len(tps) > 0:
+                    try: tp1_val = float(tps[0])
+                    except: pass
+                if len(tps) > 1:
+                    try: tp2_val = float(tps[1])
+                    except: pass
+                if len(tps) > 2:
+                    try: tp3_val = float(tps[2])
+                    except: pass
+
         sl_match = re.search(r"SL:?\s*([\d\.]+)", text_clean)
         
         # We no longer average TPs. We extract them exactly as they are.
@@ -90,9 +123,9 @@ def parse_signal(text: str) -> SignalInput or None:
             source="telegram_channel",
             metadata={
                 "order_type": order_type,
-                "tp1": float(tp1_match.group(1)) if tp1_match else None, 
-                "tp2": float(tp2_match.group(1)) if tp2_match else None,
-                "tp3": float(tp3_match.group(1)) if tp3_match else None
+                "tp1": tp1_val, 
+                "tp2": tp2_val,
+                "tp3": tp3_val
             }
         )
     except Exception as e:
