@@ -33,12 +33,18 @@ class SignalExecutor:
         # --- DYNAMIC CONFIG OVERRIDES ---
         cfg = await self.config_mgr.get_config()
         
+        # --- CONTRACT TYPE DERIVATION ---
+        from app.deriv.contracts import ACTION_TO_CONTRACT, ContractType
+        contract_type = signal_in.contract_type or ACTION_TO_CONTRACT.get(signal_in.action.upper(), ContractType.CALL)
+        signal_in.contract_type = contract_type
+
+        log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} ({contract_type}) | Stake: {signal_in.stake}")
+        
         # Override Stake and Multiplier with user-defined settings
         signal_in.stake = cfg.get("active_stake", signal_in.stake)
-        if signal_in.contract_type in ["MULTUP", "MULTDOWN"]:
+        if contract_type in ["MULTUP", "MULTDOWN"]:
              signal_in.multiplier = cfg.get("active_multiplier", signal_in.multiplier)
-             
-        log.info(f"Processing signal: {signal_in.symbol} {signal_in.action} | Stake: {signal_in.stake} | Mult: {signal_in.multiplier}")
+             log.info(f"Multiplier set to: {signal_in.multiplier}")
         
         # --- DYNAMIC TP SELECTION ---
         target_tp_level = cfg.get("target_tp_level", 1)
@@ -57,6 +63,23 @@ class SignalExecutor:
                 signal_in.take_profit = requested_tp
                 signal_in.metadata["target_tp_label"] = tp_label
                 log.info(f"Targeting {tp_label} @ {requested_tp}")
+            
+        # --- FALLBACK PROTECTION (Safe Management) ---
+        if signal_in.contract_type in ["MULTUP", "MULTDOWN"]:
+            # If no SL provided, apply a default 50% SL for safety
+            if not signal_in.stop_loss:
+                # We can't set an absolute price level here easily without a spot price,
+                # but executor.dict() handles dollar amounts too.
+                # 50% of stake
+                default_sl_amount = round(signal_in.stake * 0.5, 2)
+                signal_in.stop_loss = default_sl_amount
+                log.info(f"No SL provided. Applying fallback SL amount: ${default_sl_amount} (50%)")
+            
+            # If no TP provided, apply a default 100% TP
+            if not signal_in.take_profit:
+                default_tp_amount = round(signal_in.stake * 1.0, 2)
+                signal_in.take_profit = default_tp_amount
+                log.info(f"No TP provided. Applying fallback TP amount: ${default_tp_amount} (100%)")
 
         # --- ADMIN NOTIFICATION (Discovery) ---
         if self.tg_bot:
@@ -104,9 +127,8 @@ class SignalExecutor:
         # 4. Risk Check
         passed, reason = await self.risk.validate_trade(signal_in.symbol, signal_in.stake)
 
-        # 4. Map Action to Contract Type
-        from app.deriv.contracts import ACTION_TO_CONTRACT, ContractType
-        contract_type = signal_in.contract_type or ACTION_TO_CONTRACT.get(signal_in.action.upper(), ContractType.CALL)
+        # 4. Map Action to Contract Type (Already derived above)
+        contract_type = signal_in.contract_type
 
         # 5. Execute Trade with all parameters
         # Map 'stake' to 'amount' for the Deriv API

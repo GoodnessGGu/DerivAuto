@@ -30,9 +30,14 @@ def parse_signal(text: str) -> SignalInput or None:
         # We also look for indices like R_100 or 1HZ100V
         # Prioritize Volatility and specialized indices
         if "VOLATILITY" in text_clean:
-            v_match = re.search(r"VOLATILITY\s*(\d+)", text_clean)
-            if v_match:
-                symbol = f"R_{v_match.group(1)}"
+            # Check for (1S) variant first (e.g. Volatility 25 (1s) Index)
+            v1s_match = re.search(r"VOLATILITY\s*(\d+)\s*\(1S\)", text_clean)
+            if v1s_match:
+                symbol = f"1HZ{v1s_match.group(1)}V"
+            else:
+                v_match = re.search(r"VOLATILITY\s*(\d+)", text_clean)
+                if v_match:
+                    symbol = f"R_{v_match.group(1)}"
         
         if not symbol:
             # Look for 6-letter currency pairs (e.g. EURUSD) or slashed pairs (EUR/USD)
