@@ -42,7 +42,12 @@ def parse_signal(text: str) -> SignalInput or None:
             else:
                 v_match = re.search(r"VOLATILITY\s*(\d+)", text_clean)
                 if v_match:
-                    symbol = f"R_{v_match.group(1)}"
+                    num = v_match.group(1)
+                    # For Volatility 90, Deriv often only supports Multipliers on the 1s version (1HZ90V)
+                    if num == "90":
+                        symbol = "1HZ90V"
+                    else:
+                        symbol = f"R_{num}"
         
         elif "STEP" in text_clean:
             symbol = "STPRNG"

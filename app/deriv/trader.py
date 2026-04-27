@@ -1,4 +1,5 @@
 from typing import Optional
+import re
 from app.deriv.client import DerivClient
 from app.core.logging import log
 
@@ -13,7 +14,28 @@ class DerivTrader:
             proposal_resp = await self.proposal(**kwargs)
             
             if "error" in proposal_resp:
-                return {"success": False, "error": proposal_resp["error"].get("message")}
+                err_msg = proposal_resp["error"].get("message", "")
+                
+                # --- AUTO-RETRY LOGIC 1: INVALID MULTIPLIER ---
+                if "Multiplier is not in acceptable range" in err_msg:
+                    # Parse allowed values (e.g. "Accepts 80,200,400...")
+                    allowed = re.findall(r"\d+", err_msg.split("Accepts")[-1])
+                    if allowed:
+                        target = kwargs.get("multiplier", 100)
+                        # Find closest value that isn't too extreme
+                        new_mult = min([int(x) for x in allowed], key=lambda x:abs(x-target))
+                        log.warning(f"Multiplier {target} rejected for {kwargs.get('symbol')}. Retrying with {new_mult}.")
+                        kwargs["multiplier"] = new_mult
+                        return await self.execute_contract(**kwargs)
+                
+                # --- AUTO-RETRY LOGIC 2: ASSET NOT OFFERED (Switch to 1S version) ---
+                if "Trading is not offered" in err_msg and "R_" in kwargs.get("symbol", ""):
+                    new_symbol = kwargs["symbol"].replace("R_", "1HZ") + "V"
+                    log.warning(f"Symbol {kwargs['symbol']} not offered. Retrying with {new_symbol}.")
+                    kwargs["symbol"] = new_symbol
+                    return await self.execute_contract(**kwargs)
+
+                return {"success": False, "error": err_msg}
             
             proposal_id = proposal_resp["proposal"]["id"]
             ask_price = float(proposal_resp["proposal"]["ask_price"])
