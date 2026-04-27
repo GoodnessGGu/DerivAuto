@@ -164,6 +164,21 @@ class SignalExecutor:
                     stop_loss_price=signal_in.stop_loss
                 ))
             
+            # Notify Admin on success
+            if self.tg_bot:
+                 asyncio.create_task(self.tg_bot.app.bot.send_message(
+                     chat_id=self.tg_bot.admin_id,
+                     text=(
+                         f"✅ *TRADE EXECUTED*\n\n"
+                         f"📈 *Asset:* `{signal_in.symbol}`\n"
+                         f"⚡ *Action:* `{signal_in.action}`\n"
+                         f"💰 *Stake:* `${signal_in.stake}`\n"
+                         f"🌐 *Source:* `{signal_in.source}`\n"
+                         f"🆔 *ID:* `{result['contract_id']}`"
+                     ),
+                     parse_mode="Markdown"
+                 ))
+            
             return {"status": "executed", "contract_id": result["contract_id"]}
         else:
             log.error(f"Trade execution FAILED: {result['error']}")
@@ -178,7 +193,12 @@ class SignalExecutor:
             if self.tg_bot:
                  asyncio.create_task(self.tg_bot.app.bot.send_message(
                      chat_id=self.tg_bot.admin_id,
-                     text=f"❌ *TRADE FAILED*\n\nAsset: `{signal_in.symbol}`\nError: `{result['error']}`",
+                     text=(
+                        f"❌ *TRADE FAILED*\n\n"
+                        f"📈 *Asset:* `{signal_in.symbol}`\n"
+                        f"🌐 *Source:* `{signal_in.source}`\n"
+                        f"⚠️ *Error:* `{result['error']}`"
+                     ),
                      parse_mode="Markdown"
                  ))
             return {"status": "failed", "error": result["error"]}
